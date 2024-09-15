@@ -3,7 +3,7 @@ import 'package:fldc/pages/dashboard/widgets/product_overview.dart';
 import 'package:fldc/responsive.dart';
 import 'package:flutter/material.dart';
 
-import '../../shared/constants/ghaps.dart';
+import '../../constants/ghaps.dart';
 import 'widgets/comments.dart';
 import 'widgets/get_more_customers.dart';
 import 'widgets/popular_products.dart';

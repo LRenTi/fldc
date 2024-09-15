@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/constants/defaults.dart';
-import '../../../shared/constants/ghaps.dart';
-import '../../../shared/widgets/section_title.dart';
+import '../../../constants/defaults.dart';
+import '../../../constants/ghaps.dart';
+import '../../../widgets/section_title.dart';
 import '../../../theme/app_colors.dart';
 import 'overview_tabs.dart';
 

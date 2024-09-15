@@ -1,4 +1,4 @@
-import 'package:fldc/shared/constants/defaults.dart';
+import 'package:fldc/constants/defaults.dart';
 import 'package:fldc/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 

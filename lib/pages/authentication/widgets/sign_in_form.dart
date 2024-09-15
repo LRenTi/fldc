@@ -1,6 +1,6 @@
-import 'package:fldc/shared/constants/config.dart';
-import 'package:fldc/shared/constants/defaults.dart';
-import 'package:fldc/shared/constants/ghaps.dart';
+import 'package:fldc/constants/config.dart';
+import 'package:fldc/constants/defaults.dart';
+import 'package:fldc/constants/ghaps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

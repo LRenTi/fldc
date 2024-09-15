@@ -5,9 +5,9 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 // import '../../../shared/constants/defaults.dart';
-import '../../../shared/constants/defaults.dart';
-import '../../../shared/constants/ghaps.dart';
-import '../../../shared/widgets/section_title.dart';
+import '../../../constants/defaults.dart';
+import '../../../constants/ghaps.dart';
+import '../../../widgets/section_title.dart';
 import '../../../theme/app_colors.dart';
 
 class ProductOverviews extends StatelessWidget {

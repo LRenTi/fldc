@@ -1,6 +1,6 @@
-import 'package:fldc/shared/constants/defaults.dart';
-import 'package:fldc/shared/constants/ghaps.dart';
-import 'package:fldc/shared/widgets/avatar/customer_rounded_avatar.dart';
+import 'package:fldc/constants/defaults.dart';
+import 'package:fldc/constants/ghaps.dart';
+import 'package:fldc/widgets/avatar/customer_rounded_avatar.dart';
 import 'package:fldc/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 

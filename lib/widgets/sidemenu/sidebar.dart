@@ -1,8 +1,8 @@
 import 'package:fldc/pages/dashboard/widgets/theme_tabs.dart';
 import 'package:fldc/responsive.dart';
-import 'package:fldc/shared/constants/defaults.dart';
-import 'package:fldc/shared/constants/ghaps.dart';
-import 'package:fldc/shared/widgets/sidemenu/customer_info.dart';
+import 'package:fldc/constants/defaults.dart';
+import 'package:fldc/constants/ghaps.dart';
+import 'package:fldc/widgets/sidemenu/customer_info.dart';
 import 'package:fldc/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -23,7 +23,7 @@ class Sidebar extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 if (Responsive.isMobile(context))
                   Padding(
@@ -44,30 +44,38 @@ class Sidebar extends StatelessWidget {
                   ),
                   child: Container(
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SvgPicture.asset(AppConfig.logo),
-                        gapW16,
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "FlyLAT",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall!
-                                  .copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      color: AppColors.textGrey),
-                            ),
-                            Text(
-                              "DataCenter",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineMedium!
-                                  .copyWith(fontWeight: FontWeight.w600),
-                            ),
-                          ],
-                        ),
+                        Responsive.isMobile(context) ? gapW8 : gapW16,
+                        /*Responsive.isMobile(context)
+                            ? Text("FLDC",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium!
+                                    .copyWith(fontWeight: FontWeight.w600))
+                            : */Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "FlyLAT",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall!
+                                        .copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.textGrey),
+                                  ),
+                                  Text(
+                                    "DataCenter",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium!
+                                        .copyWith(fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
                       ],
                     ),
                   ),
@@ -88,13 +96,17 @@ class Sidebar extends StatelessWidget {
                       title: "Home",
                       activeIconSrc: "assets/icons/home_filled.svg",
                       inactiveIconSrc: "assets/icons/home_light.svg",
-                      onPressed: () {},
+                        onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/home');
+                        },
                     ),
                     MenuTile(
                       title: "Map",
                       activeIconSrc: "assets/icons/map_filled.svg",
                       inactiveIconSrc: "assets/icons/map_light.svg",
-                      onPressed: () {},
+                      onPressed:() {
+                        Navigator.pushReplacementNamed(context, '/map');
+                        } ,
                     ),
                     ExpansionTile(
                       leading:
@@ -214,9 +226,9 @@ class Sidebar extends StatelessWidget {
                       ),
                     ],
                   ),
-                  gapH20,
+                  /*gapH20,
                   const ThemeTabs(),
-                  gapH8,
+                  gapH8,*/
                 ],
               ),
             ),

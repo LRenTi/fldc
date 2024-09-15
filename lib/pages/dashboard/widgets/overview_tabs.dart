@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/constants/defaults.dart';
-import '../../../shared/constants/ghaps.dart';
-import '../../../shared/widgets/tabs/tab_with_growth.dart';
+import '../../../constants/defaults.dart';
+import '../../../constants/ghaps.dart';
+import '../../../widgets/tabs/tab_with_growth.dart';
 import '../../../theme/app_colors.dart';
 import 'customers_overview.dart';
 import 'revenue_line_chart.dart';

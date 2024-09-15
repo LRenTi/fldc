@@ -1,4 +1,4 @@
-import 'package:fldc/responsive.dart';
+/*import 'package:fldc/responsive.dart';
 import 'package:fldc/shared/constants/defaults.dart';
 import 'package:fldc/shared/widgets/sidemenu/sidebar.dart';
 import 'package:fldc/shared/widgets/sidemenu/tab_sidebar.dart';
@@ -48,4 +48,4 @@ class EntryPoint extends StatelessWidget {
       ),
     );
   }
-}
+}*/

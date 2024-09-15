@@ -1,8 +1,8 @@
 import 'package:fldc/responsive.dart';
-import 'package:fldc/shared/widgets/avatar/customer_avaatar.dart';
+import 'package:fldc/widgets/avatar/customer_avaatar.dart';
 import 'package:flutter/material.dart';
 
-import '../../../shared/constants/ghaps.dart';
+import '../../../constants/ghaps.dart';
 
 class CoustomersOverview extends StatelessWidget {
   const CoustomersOverview({

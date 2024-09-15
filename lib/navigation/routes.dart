@@ -1,5 +1,7 @@
 import 'package:fldc/pages/authentication/register_page.dart';
 import 'package:fldc/pages/authentication/sign_in_page.dart';
+import 'package:fldc/pages/Map/map_page.dart';
+import 'package:fldc/pages/dashboard/dashboard_page.dart';
 import 'package:fldc/pages/entry_point.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,7 +10,11 @@ final routerConfig = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const EntryPoint(),
+      builder: (context, state) => const DashboardPage(),
+    ),
+    GoRoute(
+      path: '/map',
+      builder: (context, state) => const MapPage(),
     ),
     GoRoute(
       path: '/sign-in',
@@ -18,10 +24,6 @@ final routerConfig = GoRouter(
       path: '/register',
       builder: (context, state) => const RegisterPage(),
     ),
-     GoRoute(
-       path: '/entry-point',
-       builder: (context, state) => const EntryPoint(),
-     ),
 /*
      GoRoute(
        path: '/forgot-password',

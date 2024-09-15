@@ -1,5 +1,5 @@
-import 'package:fldc/shared/constants/defaults.dart';
-import 'package:fldc/shared/widgets/tabs/tab_with_icon.dart';
+import 'package:fldc/constants/defaults.dart';
+import 'package:fldc/widgets/tabs/tab_with_icon.dart';
 import 'package:fldc/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
