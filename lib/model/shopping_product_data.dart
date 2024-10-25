@@ -1,0 +1,72 @@
+import 'dart:convert';
+
+import 'package:fldc/helpers/extensions/string.dart';
+import 'package:fldc/helpers/services/json_decoder.dart';
+import 'package:fldc/model/identifier_model.dart';
+import 'package:flutter/services.dart';
+
+class ShoppingProduct extends IdentifierModel {
+  String name, image, description;
+  double price, rating;
+  int review, quantity;
+  Color color;
+  bool favorite;
+
+  ShoppingProduct(
+      super.id,
+      this.name,
+      this.image,
+      this.description,
+      this.rating,
+      this.price,
+      this.review,
+      this.quantity,
+      this.color,
+      this.favorite);
+
+  static ShoppingProduct fromJSON(Map<String, dynamic> json) {
+    JSONDecoder decoder = JSONDecoder(json);
+
+    String name = decoder.getString('name');
+    String image = decoder.getString('image');
+    String description = decoder.getString('description');
+    double price = decoder.getDouble('price');
+    double rating = decoder.getDouble('rating');
+    int review = decoder.getInt('review');
+    int quantity = decoder.getInt('quantity');
+    Color color = decoder.jsonObject['color'].toString().toColor;
+    bool favorite = decoder.getBool('favorite');
+
+    return ShoppingProduct(
+      decoder.getId,
+      name,
+      image,
+      description,
+      rating,
+      price,
+      review,
+      quantity,
+      color,
+      favorite,
+    );
+  }
+
+  static List<ShoppingProduct> listFromJSON(List<dynamic> list) {
+    return list.map((e) => ShoppingProduct.fromJSON(e)).toList();
+  }
+
+  static List<ShoppingProduct>? _dummyList;
+
+  static Future<List<ShoppingProduct>> get dummyList async {
+    if (_dummyList == null) {
+      dynamic data = json.decode(await getData());
+      _dummyList = listFromJSON(data);
+    }
+
+    return _dummyList!;
+  }
+
+  static Future<String> getData() async {
+    return await rootBundle.loadString('assets/data/shopping_product.json');
+  }
+}

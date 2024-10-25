@@ -13,6 +13,8 @@
 
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
+    build command: flutter build web --base-href=/fldc/web/
+
   -->
   <base href="$FLUTTER_BASE_HREF">
 
@@ -25,14 +27,29 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="fldc">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link href="style.css" rel="stylesheet">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>fldc</title>
+  <title>FLDC - FlyLat DataCenter</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- This script adds the flutter initialization JS code -->
+  <style>
+    .center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: 0 -50% 0 0;
+      transform: translate(-50%, -50%)
+    }
+  </style>
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>
+
+  <div class="lds-grid center"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 </body>
+
 </html>
