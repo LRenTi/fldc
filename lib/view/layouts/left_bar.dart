@@ -1,5 +1,6 @@
 import 'package:fldc/helpers/extensions/string.dart';
 import 'package:fldc/helpers/services/url_service.dart';
+import 'package:fldc/helpers/theme/app_theme.dart';
 import 'package:fldc/helpers/theme/theme_customizer.dart';
 import 'package:fldc/helpers/utils/mixins/ui_mixin.dart';
 import 'package:fldc/helpers/utils/my_shadow.dart';
@@ -10,6 +11,7 @@ import 'package:fldc/helpers/widgets/my_text.dart';
 import 'package:fldc/images.dart';
 import 'package:fldc/widgets/custom_pop_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/route_manager.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
@@ -42,7 +44,8 @@ class LeftBar extends StatefulWidget {
   _LeftBarState createState() => _LeftBarState();
 }
 
-class _LeftBarState extends State<LeftBar> with SingleTickerProviderStateMixin, UIMixin {
+class _LeftBarState extends State<LeftBar>
+    with SingleTickerProviderStateMixin, UIMixin {
   final ThemeCustomizer customizer = ThemeCustomizer.instance;
 
   bool isCondensed = false;
@@ -68,16 +71,58 @@ class _LeftBarState extends State<LeftBar> with SingleTickerProviderStateMixin, 
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   InkWell(
-                      onTap: () {
-                        Get.toNamed('/dashboard/analytics');
-                      },
-                      child: Image.asset(!widget.isCondensed ? Images.logo : Images.logoSm, height: widget.isCondensed ? 28 : 55))
+                    onTap: () {
+                      Get.toNamed('/dashboard/analytics');
+                    },
+                    child: widget.isCondensed
+                        ? SvgPicture.asset(
+                            Images.logoSmSvg,
+                            height: 28,
+                          )
+                        : Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  Images.logoSmSvg,
+                                  height: 50,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "FlyLat",
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      Text(
+                                        "DataCenter",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: AppTheme.primaryColor,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                  ),
                 ],
               ),
             ),
             Expanded(
                 child: ScrollConfiguration(
-              behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+              behavior:
+                  ScrollConfiguration.of(context).copyWith(scrollbars: false),
               child: ListView(
                 shrinkWrap: true,
                 controller: ScrollController(),
@@ -262,8 +307,14 @@ class _LeftBarState extends State<LeftBar> with SingleTickerProviderStateMixin, 
                         route: '/auth_2/forgot_password',
                         isCondensed: widget.isCondensed,
                       ),
-                      MenuItem(title: 'Reset Password 2', route: '/auth_2/reset_password', isCondensed: widget.isCondensed),
-                      MenuItem(title: 'Register Account 2', route: '/auth_2/register_account', isCondensed: widget.isCondensed),
+                      MenuItem(
+                          title: 'Reset Password 2',
+                          route: '/auth_2/reset_password',
+                          isCondensed: widget.isCondensed),
+                      MenuItem(
+                          title: 'Register Account 2',
+                          route: '/auth_2/register_account',
+                          isCondensed: widget.isCondensed),
                     ],
                   ),
                   MenuWidget(
@@ -437,11 +488,18 @@ class _LeftBarState extends State<LeftBar> with SingleTickerProviderStateMixin, 
                       child: Padding(
                           padding: MySpacing.x(16),
                           child: Container(
-                            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 16),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8), // color: contentTheme.primary.withAlpha(40),
+                                borderRadius: BorderRadius.circular(
+                                    8), // color: contentTheme.primary.withAlpha(40),
                                 gradient: LinearGradient(
-                                    colors: const [Colors.deepPurple, Colors.lightBlue], begin: Alignment.topLeft, end: Alignment.bottomRight)),
+                                    colors: const [
+                                      Colors.deepPurple,
+                                      Colors.lightBlue
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight)),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -451,7 +509,8 @@ class _LeftBarState extends State<LeftBar> with SingleTickerProviderStateMixin, 
                                     borderRadius: BorderRadius.circular(8),
                                     color: Colors.white.withAlpha(32),
                                   ),
-                                  child: Icon(LucideIcons.layout_dashboard, color: Colors.white),
+                                  child: Icon(LucideIcons.layout_dashboard,
+                                      color: Colors.white),
                                 ),
                                 SizedBox(
                                   height: 16,
@@ -465,7 +524,8 @@ class _LeftBarState extends State<LeftBar> with SingleTickerProviderStateMixin, 
                                   height: 16,
                                 ),
                                 Container(
-                                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 16),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(4),
                                     color: Colors.white,
@@ -490,9 +550,15 @@ class _LeftBarState extends State<LeftBar> with SingleTickerProviderStateMixin, 
                           child: Container(
                             padding: EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4), // color: contentTheme.primary.withAlpha(40),
+                                borderRadius: BorderRadius.circular(
+                                    4), // color: contentTheme.primary.withAlpha(40),
                                 gradient: LinearGradient(
-                                    colors: const [Colors.deepPurple, Colors.lightBlue], begin: Alignment.topLeft, end: Alignment.bottomRight)),
+                                    colors: const [
+                                      Colors.deepPurple,
+                                      Colors.lightBlue
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight)),
                             child: Center(
                               child: Icon(
                                 LucideIcons.download,
@@ -551,7 +617,8 @@ class MenuWidget extends StatefulWidget {
   _MenuWidgetState createState() => _MenuWidgetState();
 }
 
-class _MenuWidgetState extends State<MenuWidget> with UIMixin, SingleTickerProviderStateMixin {
+class _MenuWidgetState extends State<MenuWidget>
+    with UIMixin, SingleTickerProviderStateMixin {
   bool isHover = false;
   bool isActive = false;
   late Animation<double> _iconTurns;
@@ -562,8 +629,10 @@ class _MenuWidgetState extends State<MenuWidget> with UIMixin, SingleTickerProvi
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(duration: Duration(milliseconds: 200), vsync: this);
-    _iconTurns = _controller.drive(Tween<double>(begin: 0.0, end: 0.5).chain(CurveTween(curve: Curves.easeIn)));
+    _controller =
+        AnimationController(duration: Duration(milliseconds: 200), vsync: this);
+    _iconTurns = _controller.drive(Tween<double>(begin: 0.0, end: 0.5)
+        .chain(CurveTween(curve: Curves.easeIn)));
     LeftbarObserver.attachListener(widget.title, onChangeMenuActive);
   }
 
@@ -633,12 +702,16 @@ class _MenuWidgetState extends State<MenuWidget> with UIMixin, SingleTickerProvi
                   height: 26,
                   width: 6,
                   paddingAll: 0,
-                  color: isActive || isHover ? leftBarTheme.activeItemColor : Colors.transparent,
+                  color: isActive || isHover
+                      ? leftBarTheme.activeItemColor
+                      : Colors.transparent,
                 ),
                 MySpacing.width(12),
                 Icon(
                   widget.iconData,
-                  color: (isHover || isActive) ? leftBarTheme.activeItemColor : leftBarTheme.onBackground,
+                  color: (isHover || isActive)
+                      ? leftBarTheme.activeItemColor
+                      : leftBarTheme.onBackground,
                   size: 20,
                 ),
               ],
@@ -704,13 +777,17 @@ class _MenuWidgetState extends State<MenuWidget> with UIMixin, SingleTickerProvi
                       height: 26,
                       width: 5,
                       paddingAll: 0,
-                      color: isActive || isHover ? leftBarTheme.activeItemColor : Colors.transparent,
+                      color: isActive || isHover
+                          ? leftBarTheme.activeItemColor
+                          : Colors.transparent,
                     ),
                     MySpacing.width(12),
                     Icon(
                       widget.iconData,
                       size: 20,
-                      color: isHover || isActive ? leftBarTheme.activeItemColor : leftBarTheme.onBackground,
+                      color: isHover || isActive
+                          ? leftBarTheme.activeItemColor
+                          : leftBarTheme.onBackground,
                     ),
                     MySpacing.width(18),
                     Expanded(
@@ -719,7 +796,9 @@ class _MenuWidgetState extends State<MenuWidget> with UIMixin, SingleTickerProvi
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.start,
-                        color: isHover || isActive ? leftBarTheme.activeItemColor : leftBarTheme.onBackground,
+                        color: isHover || isActive
+                            ? leftBarTheme.activeItemColor
+                            : leftBarTheme.onBackground,
                       ),
                     ),
                   ],
@@ -764,7 +843,8 @@ class MenuItem extends StatefulWidget {
   _MenuItemState createState() => _MenuItemState();
 }
 
-class _MenuItemState extends State<MenuItem> with UIMixin, SingleTickerProviderStateMixin {
+class _MenuItemState extends State<MenuItem>
+    with UIMixin, SingleTickerProviderStateMixin {
   bool isHover = false;
   bool isActive = false;
   late Animation<double> _iconTurns;
@@ -775,8 +855,10 @@ class _MenuItemState extends State<MenuItem> with UIMixin, SingleTickerProviderS
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(duration: Duration(milliseconds: 200), vsync: this);
-    _iconTurns = _controller.drive(Tween<double>(begin: 0.0, end: 0.5).chain(CurveTween(curve: Curves.easeIn)));
+    _controller =
+        AnimationController(duration: Duration(milliseconds: 200), vsync: this);
+    _iconTurns = _controller.drive(Tween<double>(begin: 0.0, end: 0.5)
+        .chain(CurveTween(curve: Curves.easeIn)));
     LeftbarObserver.attachListener(widget.title, onChangeMenuActive);
   }
 
@@ -802,7 +884,8 @@ class _MenuItemState extends State<MenuItem> with UIMixin, SingleTickerProviderS
   void didChangeDependencies() {
     super.didChangeDependencies();
     var route = UrlService.getCurrentUrl();
-    isActive = widget.childrenMenuWidget.any((element) => element.route == route);
+    isActive =
+        widget.childrenMenuWidget.any((element) => element.route == route);
     onChangeExpansion(isActive);
     if (hideFn != null) {
       hideFn!();
@@ -836,20 +919,27 @@ class _MenuItemState extends State<MenuItem> with UIMixin, SingleTickerProviderS
           child: MyContainer.transparent(
             margin: MySpacing.fromLTRB(4, 0, 8, 4),
             borderRadiusAll: 8,
-            color: isActive || isHover ? leftBarTheme.activeItemBackground : Colors.transparent,
+            color: isActive || isHover
+                ? leftBarTheme.activeItemBackground
+                : Colors.transparent,
             width: MediaQuery.of(context).size.width,
             padding: MySpacing.xy(18, 7),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(LucideIcons.dot, color: isActive || isHover ? leftBarTheme.activeItemColor : leftBarTheme.onBackground),
+                Icon(LucideIcons.dot,
+                    color: isActive || isHover
+                        ? leftBarTheme.activeItemColor
+                        : leftBarTheme.onBackground),
                 MyText.bodySmall(
                   "${widget.title}",
                   overflow: TextOverflow.clip,
                   maxLines: 1,
                   textAlign: TextAlign.left,
                   fontSize: 12.5,
-                  color: isActive || isHover ? leftBarTheme.activeItemColor : leftBarTheme.onBackground,
+                  color: isActive || isHover
+                      ? leftBarTheme.activeItemColor
+                      : leftBarTheme.onBackground,
                   fontWeight: isActive || isHover ? 600 : 500,
                 ),
               ],
@@ -880,13 +970,17 @@ class _MenuItemState extends State<MenuItem> with UIMixin, SingleTickerProviderS
           },
           child: MyContainer.transparent(
             margin: MySpacing.fromLTRB(16, 0, 16, 8),
-            color: isActive || isHover ? leftBarTheme.activeItemBackground : Colors.transparent,
+            color: isActive || isHover
+                ? leftBarTheme.activeItemBackground
+                : Colors.transparent,
             borderRadiusAll: 8,
             padding: MySpacing.xy(8, 8),
             child: Center(
               child: Icon(
                 widget.iconData,
-                color: (isHover || isActive) ? leftBarTheme.activeItemColor : leftBarTheme.onBackground,
+                color: (isHover || isActive)
+                    ? leftBarTheme.activeItemColor
+                    : leftBarTheme.onBackground,
                 size: 20,
               ),
             ),
@@ -950,7 +1044,9 @@ class _MenuItemState extends State<MenuItem> with UIMixin, SingleTickerProviderS
                     Icon(
                       widget.iconData,
                       size: 20,
-                      color: isHover || isActive ? leftBarTheme.activeItemColor : leftBarTheme.onBackground,
+                      color: isHover || isActive
+                          ? leftBarTheme.activeItemColor
+                          : leftBarTheme.onBackground,
                     ),
                     MySpacing.width(18),
                     Expanded(
@@ -959,7 +1055,9 @@ class _MenuItemState extends State<MenuItem> with UIMixin, SingleTickerProviderS
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.start,
-                        color: isHover || isActive ? leftBarTheme.activeItemColor : leftBarTheme.onBackground,
+                        color: isHover || isActive
+                            ? leftBarTheme.activeItemColor
+                            : leftBarTheme.onBackground,
                       ),
                     ),
                   ],
@@ -983,7 +1081,12 @@ class NavigationItem extends StatefulWidget {
   final bool isCondensed;
   final String? route;
 
-  const NavigationItem({super.key, this.iconData, required this.title, this.isCondensed = false, this.route});
+  const NavigationItem(
+      {super.key,
+      this.iconData,
+      required this.title,
+      this.isCondensed = false,
+      this.route});
 
   @override
   _NavigationItemState createState() => _NavigationItemState();
@@ -1024,12 +1127,18 @@ class _NavigationItemState extends State<NavigationItem> with UIMixin {
                 height: 26,
                 width: 6,
                 paddingAll: 0,
-                color: isActive || isHover ? leftBarTheme.activeItemColor : Colors.transparent,
+                color: isActive || isHover
+                    ? leftBarTheme.activeItemColor
+                    : Colors.transparent,
               ),
               MySpacing.width(12),
               if (widget.iconData != null)
                 Center(
-                  child: Icon(widget.iconData, color: (isHover || isActive) ? leftBarTheme.activeItemColor : leftBarTheme.onBackground, size: 20),
+                  child: Icon(widget.iconData,
+                      color: (isHover || isActive)
+                          ? leftBarTheme.activeItemColor
+                          : leftBarTheme.onBackground,
+                      size: 20),
                 ),
               if (!widget.isCondensed)
                 Flexible(
@@ -1043,7 +1152,9 @@ class _NavigationItemState extends State<NavigationItem> with UIMixin {
                     widget.title,
                     overflow: TextOverflow.clip,
                     maxLines: 1,
-                    color: isActive || isHover ? leftBarTheme.activeItemColor : leftBarTheme.onBackground,
+                    color: isActive || isHover
+                        ? leftBarTheme.activeItemColor
+                        : leftBarTheme.onBackground,
                   ),
                 )
             ],

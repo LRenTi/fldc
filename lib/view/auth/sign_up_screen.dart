@@ -6,7 +6,7 @@ import 'package:fldc/helpers/widgets/my_spacing.dart';
 import 'package:fldc/helpers/widgets/my_text.dart';
 import 'package:fldc/images.dart';
 import 'package:fldc/view/layouts/auth_layout.dart';
-import 'package:fldc/widgets/flow_kit_text_field.dart';
+import 'package:fldc/widgets/fldc_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';

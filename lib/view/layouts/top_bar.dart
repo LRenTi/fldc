@@ -77,10 +77,10 @@ class _TopBarState extends State<TopBar>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                InkWell(
-                    onTap: () => searchModal(context),
-                    child: Icon(LucideIcons.search, size: 20)),
-                MySpacing.width(24),
+                // InkWell(
+                //     onTap: () => searchModal(context),
+                //     child: Icon(LucideIcons.search, size: 20)),
+                // MySpacing.width(24),
                 CustomPopupMenu(
                   backdrop: true,
                   hideFn: (hide) => languageHideFn = hide,
@@ -97,14 +97,14 @@ class _TopBarState extends State<TopBar>
                           height: 18)),
                   menuBuilder: (_) => buildLanguageSelector(),
                 ),
-                MySpacing.width(24),
-                CustomPopupMenu(
-                    backdrop: true,
-                    onChange: (_) {},
-                    offsetX: -120,
-                    offsetY: 21,
-                    menu: Icon(LucideIcons.bell, size: 20),
-                    menuBuilder: (_) => buildNotifications()),
+                // MySpacing.width(24),
+                // CustomPopupMenu(
+                //     backdrop: true,
+                //     onChange: (_) {},
+                //     offsetX: -120,
+                //     offsetY: 21,
+                //     menu: Icon(LucideIcons.bell, size: 20),
+                //     menuBuilder: (_) => buildNotifications()),
                 MySpacing.width(24),
                 InkWell(
                     onTap: goFullScreen,
@@ -128,40 +128,40 @@ class _TopBarState extends State<TopBar>
                       size: 20,
                       color: topBarTheme.onBackground),
                 ),
-                MySpacing.width(24),
-                CustomPopupMenu(
-                  backdrop: true,
-                  onChange: (_) {},
-                  offsetX: -20,
-                  offsetY: 0,
-                  menu: Padding(
-                    padding: MySpacing.xy(8, 8),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        MyContainer.rounded(
-                            paddingAll: 0,
-                            child: Image.asset(
-                              Images.avatars[1],
-                              height: 28,
-                              width: 28,
-                              fit: BoxFit.cover,
-                            )),
-                        MySpacing.width(8),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            MyText.labelLarge("Tylor", fontWeight: 600),
-                            MyText.labelSmall("Web Designer", fontWeight: 600),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  menuBuilder: (_) => buildAccountMenu(),
-                  hideFn: (hide) => languageHideFn = hide,
-                ),
+                // MySpacing.width(24),
+                // CustomPopupMenu(
+                //   backdrop: true,
+                //   onChange: (_) {},
+                //   offsetX: -20,
+                //   offsetY: 0,
+                //   menu: Padding(
+                //     padding: MySpacing.xy(8, 8),
+                //     child: Row(
+                //       crossAxisAlignment: CrossAxisAlignment.center,
+                //       children: [
+                //         MyContainer.rounded(
+                //             paddingAll: 0,
+                //             child: Image.asset(
+                //               Images.avatars[1],
+                //               height: 28,
+                //               width: 28,
+                //               fit: BoxFit.cover,
+                //             )),
+                //         MySpacing.width(8),
+                //         Column(
+                //           mainAxisAlignment: MainAxisAlignment.center,
+                //           crossAxisAlignment: CrossAxisAlignment.start,
+                //           children: [
+                //             MyText.labelLarge("Tylor", fontWeight: 600),
+                //             MyText.labelSmall("Web Designer", fontWeight: 600),
+                //           ],
+                //         )
+                //       ],
+                //     ),
+                //   ),
+                //   menuBuilder: (_) => buildAccountMenu(),
+                //   hideFn: (hide) => languageHideFn = hide,
+                // ),
               ],
             ),
           )

@@ -300,6 +300,7 @@ class _LoadersScreenState extends State<LoadersScreen>
 
   Widget progressiveDotsLoader() {
     return MyCard(
+      
       borderRadiusAll: 8,
       shadow: MyShadow(position: MyShadowPosition.bottom, elevation: .5),
       height: 150,

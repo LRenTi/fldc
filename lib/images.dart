@@ -20,6 +20,7 @@ class Images {
 
   static String logo = 'assets/images/logo/logo.png';
   static String logoSm = 'assets/images/logo/logo-sm.png';
+  static String logoSmSvg = 'assets/images/logo/fldc-logo-sm.svg';
   static String authBackground = 'assets/images/dummy/auth_background.png';
   static String google = 'assets/images/brand/google.png';
   static String auth2Background = 'assets/images/dummy/auth_2.png';

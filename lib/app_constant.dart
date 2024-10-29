@@ -6,7 +6,7 @@ final DateFormat timeFormatter = DateFormat('jms');
 class AppConstant {
   static int androidAppVersion = 2;
   static int iOSAppVersion = 2;
-  static String version = "2.0.0";
+  static String version = "0.0.1";
 
-  static String get appName => 'Flatten';
+  static String get appName => 'FlyLat DataCenter';
 }
