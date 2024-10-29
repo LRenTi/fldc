@@ -1,4 +1,5 @@
 import 'package:fldc/helpers/services/auth_service.dart';
+import 'package:fldc/pages/HomeScreen.dart';
 import 'package:fldc/view/apps/calendar/calendar_screen.dart';
 import 'package:fldc/view/apps/chat_screen.dart';
 import 'package:fldc/view/apps/contact/member_list_screen.dart';
@@ -85,7 +86,7 @@ getPageRoute() {
         name: '/auth_2/register_account', page: () => sign_up2.SignUpScreen()),
     GetPage(
       name: '/',
-      page: () => EcommerceScreen(),
+      page: () => Homescreen(),
       //middlewares: [AuthMiddleware()],
     ),
     GetPage(

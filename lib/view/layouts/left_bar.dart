@@ -129,6 +129,12 @@ class _LeftBarState extends State<LeftBar>
                 physics: BouncingScrollPhysics(),
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 children: [
+                  NavigationItem(
+                    title: "Home",
+                    isCondensed: isCondensed,
+                    iconData: LucideIcons.house,
+                    route: '/dashboard/',
+                  ),
                   labelWidget("dashboard".tr()),
                   NavigationItem(
                     iconData: LucideIcons.layout_dashboard,
