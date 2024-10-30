@@ -1,0 +1,84 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+enum CrudRequest {
+  getMethod('GET'),
+  postMehtod('POST'),
+  putMethod('PUT'),
+  deleteMethod('DELETE');
+
+  const CrudRequest(this.enumName);
+  final String enumName;
+}
+
+class ApiService {
+  static successCallback(dynamic res) {}
+
+  static errorCallback(int statusCode, String error) {}
+
+  static Future<void> send(
+    CrudRequest method,
+    String path, {
+    Object? body,
+    Function(dynamic) onSuccess = successCallback,
+    Function(int, String) onError = errorCallback,
+  }) async {
+    final url = Uri.parse(path);
+
+    try {
+      switch (method) {
+        case CrudRequest.getMethod:
+          var response = await _handleGetRequest(url);
+          _handleResponse(response, onSuccess, onError);
+          break;
+        case CrudRequest.postMehtod:
+          break;
+        case CrudRequest.putMethod:
+          break;
+        case CrudRequest.deleteMethod:
+          break;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static Future<http.Response> _handleGetRequest(Uri url) async {
+    return await http.get(url);
+  }
+
+  static Future<void> _handleResponse(dynamic response,
+      Function(dynamic) onSuccess, Function(int, String) onError) async {
+    http.Response? httpResponse;
+
+    if (response is http.StreamedResponse) {
+      final responseBytes = await response.stream.toBytes();
+      httpResponse = http.Response.bytes(
+        responseBytes,
+        response.statusCode,
+        headers: response.headers,
+        request: response.request,
+      );
+    } else if (response is http.Response) {
+      httpResponse = response;
+    }
+
+    if (httpResponse != null) {
+      if (httpResponse.statusCode == 200) {
+        if (httpResponse.body.isNotEmpty) {
+          if (httpResponse.headers['content-type']!
+              .contains('application/json')) {
+            var json = jsonDecode(httpResponse.body);
+            onSuccess(json);
+          } else {
+            onSuccess(httpResponse.body.toString());
+          }
+        } else {
+          onSuccess(null);
+        }
+      } else {
+        onError(httpResponse.statusCode, httpResponse.body);
+      }
+    }
+  }
+}
