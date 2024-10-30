@@ -92,41 +92,41 @@ class _LayoutState extends State<Layout> {
                     height: 18)),
             menuBuilder: (_) => buildLanguageSelector(),
           ),
-          MySpacing.width(8),
-          CustomPopupMenu(
-            backdrop: true,
-            onChange: (_) {},
-            offsetX: -210,
-            menu: Padding(
-              padding: MySpacing.xy(8, 8),
-              child: Center(
-                child: Icon(
-                  LucideIcons.bell,
-                  size: 18,
-                ),
-              ),
-            ),
-            menuBuilder: (_) => buildNotifications(),
-          ),
-          MySpacing.width(8),
-          CustomPopupMenu(
-            backdrop: true,
-            onChange: (_) {},
-            offsetX: -90,
-            offsetY: 4,
-            menu: Padding(
-              padding: MySpacing.xy(8, 8),
-              child: MyContainer.rounded(
-                  paddingAll: 0,
-                  child: Image.asset(
-                    Images.avatars[0],
-                    height: 28,
-                    width: 28,
-                    fit: BoxFit.cover,
-                  )),
-            ),
-            menuBuilder: (_) => buildAccountMenu(),
-          ),
+          // MySpacing.width(8),
+          // CustomPopupMenu(
+          //   backdrop: true,
+          //   onChange: (_) {},
+          //   offsetX: -210,
+          //   menu: Padding(
+          //     padding: MySpacing.xy(8, 8),
+          //     child: Center(
+          //       child: Icon(
+          //         LucideIcons.bell,
+          //         size: 18,
+          //       ),
+          //     ),
+          //   ),
+          //   menuBuilder: (_) => buildNotifications(),
+          // ),
+          // MySpacing.width(8),
+          // CustomPopupMenu(
+          //   backdrop: true,
+          //   onChange: (_) {},
+          //   offsetX: -90,
+          //   offsetY: 4,
+          //   menu: Padding(
+          //     padding: MySpacing.xy(8, 8),
+          //     child: MyContainer.rounded(
+          //         paddingAll: 0,
+          //         child: Image.asset(
+          //           Images.avatars[0],
+          //           height: 28,
+          //           width: 28,
+          //           fit: BoxFit.cover,
+          //         )),
+          //   ),
+          //   menuBuilder: (_) => buildAccountMenu(),
+          // ),
           MySpacing.width(20)
         ],
       ),

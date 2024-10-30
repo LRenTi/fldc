@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
 
-class MapController extends MyController {
+class MapController2 extends MyController {
   late List<Model> data;
   late MapShapeSource dataSource;
   late MapShapeSource source;

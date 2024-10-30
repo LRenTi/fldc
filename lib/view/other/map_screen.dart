@@ -23,11 +23,11 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen>
     with SingleTickerProviderStateMixin, UIMixin {
-  late MapController controller;
+  late MapController2 controller;
 
   @override
   void initState() {
-    controller = MapController();
+    controller = MapController2();
     super.initState();
   }
 
