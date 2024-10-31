@@ -20,15 +20,27 @@ class ApiService {
     CrudRequest method,
     String path, {
     Object? body,
+    bool cors = false,
     Function(dynamic) onSuccess = successCallback,
     Function(int, String) onError = errorCallback,
   }) async {
-    final url = Uri.parse(path);
+    var url = Uri.parse(path);
+    if(cors){
+      url = Uri.parse('https://cors-anywhere.herokuapp.com/' + path);
+    }
 
     try {
       switch (method) {
         case CrudRequest.getMethod:
-          var response = await _handleGetRequest(url);
+        Map<String, String> headers = {};
+          if (!cors) {
+            headers = {
+              '<Accept>': 'application/json'
+            };
+            print("Header YES");
+          }
+          print("Start GET Request");
+          var response = await _handleGetRequest(url, headers);
           _handleResponse(response, onSuccess, onError);
           break;
         case CrudRequest.postMehtod:
@@ -43,8 +55,16 @@ class ApiService {
     }
   }
 
-  static Future<http.Response> _handleGetRequest(Uri url) async {
-    return await http.get(url);
+  static Future<http.Response> _handleGetRequest(
+      Uri url, Map<String, String>? headers) async {
+        if(headers!.isEmpty) {
+          print("Send GET Request without Headers");
+          return await http.get(url, headers: headers);
+        }
+        else {
+          return await http.get(url);
+        }
+    
   }
 
   static Future<void> _handleResponse(dynamic response,

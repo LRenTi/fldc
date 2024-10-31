@@ -1,15 +1,18 @@
-import 'package:fldc/controller/Map.controller.dart';
-import 'package:fldc/helpers/utils/mixins/ui_mixin.dart';
-import 'package:fldc/helpers/widgets/my_card.dart';
-import 'package:fldc/model/routes_model.dart';
-import 'package:fldc/services/CompanyRoute.service.dart';
-import 'package:fldc/view/layouts/layout.dart';
-import 'package:fldc/view/layouts/left_bar.dart';
+import 'package:fldc/model/flightdata_model.dart';
+import 'package:fldc/services/api.service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:fldc/controller/Map.controller.dart';
+import 'package:fldc/helpers/theme/app_theme.dart';
+import 'package:fldc/helpers/utils/mixins/ui_mixin.dart';
+import 'package:fldc/helpers/widgets/my_button.dart';
+import 'package:fldc/helpers/widgets/my_spacing.dart';
+import 'package:fldc/helpers/widgets/my_text.dart';
+import 'package:fldc/model/routes_model.dart';
+import 'package:fldc/services/CompanyRoute.service.dart';
+import 'package:fldc/view/layouts/left_bar.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -20,68 +23,147 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage>
     with SingleTickerProviderStateMixin, UIMixin {
-  late MapControllerFLDC controller;
-
-  late Future<CompanyRoutes> data;
+  late List<FlightData> flights;
 
   @override
   void initState() {
-    controller = MapControllerFLDC();
-    data =
-        CompanyRouteService.getCompanyRoutes(100172); // Future initialisieren
     super.initState();
+    controller = MapControllerFLDC();
+    data = CompanyRouteService.getCompanyRoutes(100172);
+    _fetchFlightData();
   }
+
+  void _fetchFlightData() {
+    ApiService.send(
+      CrudRequest.getMethod,
+      "https://flylat.net/flylat_connect/map/mapper_all/getDataAi.php",
+      cors: true,
+      onSuccess: (response) {
+        setState(() {
+          flights = (response as List)
+              .map((flight) => FlightData.fromJson(flight))
+              .toList();
+        });
+        print(flights);
+      },
+      onError: (statusCode, message) {
+        print('Error: $statusCode, $message');
+      },
+    );
+  }
+
+  late MapControllerFLDC controller;
+  late Future<CompanyRoutes> data;
+  String selectedOption = '100172';
+
+  final List<String> dropdownOptions = [
+    '100079',
+    '100084',
+    '100172',
+    '100219',
+    '100269'
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<CompanyRoutes>(
+      body: FutureBuilder(
         future: data,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.routes.isEmpty) {
+            return Center(
+                child: Text(
+                    'Error: ${snapshot.error}\nDetails: ${snapshot.stackTrace}'));
+          } else if (snapshot.data == null || snapshot.data!.routes.isEmpty) {
             return Center(child: Text('No routes available'));
           }
+
           var routes = snapshot.data!.routes;
-          return FlutterMap(
-            options: MapOptions(
-              initialCenter: LatLng(51.0, 10.0),
-              initialZoom: 5.0,
-            ),
+          final Set<String> airportICOs = {};
+
+          return Stack(
             children: [
-              TileLayer(
-                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName: 'dev.fleaflet.flutter_map.example',
+              FlutterMap(
+                options: MapOptions(
+                  initialCenter: LatLng(51.0, 10.0),
+                  initialZoom: 4.0,
+                ),
+                children: [
+                  TileLayer(
+                    urlTemplate:
+                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    userAgentPackageName: 'dev.fleaflet.flutter_map.example',
+                  ),
+                  PolylineLayer(
+                    polylines: routes
+                        .map((route) => Polyline(
+                              points: [
+                                LatLng(route.departure.latitude,
+                                    route.departure.longitude),
+                                LatLng(route.destination.latitude,
+                                    route.destination.longitude),
+                              ],
+                              strokeWidth: 2.0,
+                              color: const Color.fromARGB(255, 95, 95, 95),
+                            ))
+                        .toList(),
+                  ),
+                  MarkerLayer(
+                    markers: routes.expand((route) {
+                      List<Marker> markers = [];
+                      if (airportICOs.add(route.departure.icao)) {
+                        markers.add(_buildAirportMarker(
+                            context, route.departure, snapshot.data!));
+                      }
+                      if (airportICOs.add(route.destination.icao)) {
+                        markers.add(_buildAirportMarker(
+                            context, route.destination, snapshot.data!));
+                      }
+                      return markers;
+                    }).toList(),
+                  ),
+                  LeftBar(
+                    isCondensed: true,
+                  ),
+                ],
               ),
-              PolylineLayer(
-                polylines: routes
-                    .map((route) => Polyline(
-                          points: [
-                            LatLng(route.departure.latitude,
-                                route.departure.longitude),
-                            LatLng(route.destination.latitude,
-                                route.destination.longitude),
-                          ],
-                          strokeWidth: 2.0,
-                          color: const Color.fromARGB(255, 95, 95, 95),
-                        ))
-                    .toList(),
+              Positioned(
+                top: 20,
+                left: MediaQuery.of(context).size.width / 2 - 100,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: DropdownButton<String>(
+                    value: selectedOption,
+                    items: dropdownOptions.map((String option) {
+                      return DropdownMenuItem<String>(
+                        value: option,
+                        child: Text(option),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedOption = newValue!;
+                        data = CompanyRouteService.getCompanyRoutes(
+                            selectedOption);
+                      });
+                    },
+                  ),
+                ),
               ),
-              MarkerLayer(
-                markers: routes
-                    .expand((route) => [
-                          _buildAirportMarker(context, route.departure, route),
-                          _buildAirportMarker(
-                              context, route.destination, route),
-                        ])
-                    .toList(),
-              ),
-              LeftBar(
-                isCondensed: true,
-              )
             ],
           );
         },
@@ -90,15 +172,7 @@ class _MapPageState extends State<MapPage>
   }
 
   Marker _buildAirportMarker(
-      BuildContext context, Airport airport, Routes route) {
-    Color boxColor;
-    if (route.verified && route.destination == airport) {
-      boxColor = Colors.green;
-    } else if (route.departure == airport) {
-      boxColor = Colors.blue;
-    } else {
-      boxColor = Colors.red;
-    }
+      BuildContext context, Airport airport, CompanyRoutes data) {
     return Marker(
       width: 40.0,
       height: 20.0,
@@ -107,11 +181,11 @@ class _MapPageState extends State<MapPage>
         airport.longitude.isFinite ? airport.longitude : 0.0,
       ),
       child: GestureDetector(
-        onTap: () => _showRouteInfoModal(context, airport),
+        onTap: () => _showRouteInfoModal(context, airport, data),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5.0),
-            color: boxColor,
+            color: AppTheme.primaryColor,
           ),
           child: Center(
             child: Text(
@@ -124,22 +198,185 @@ class _MapPageState extends State<MapPage>
     );
   }
 
-  void _showRouteInfoModal(BuildContext context, Airport airport) {
-    showModalBottomSheet(
+  void _showRouteInfoModal(
+      BuildContext context, Airport airport, CompanyRoutes data) {
+    final List<Routes> routesList = [];
+    for (var route in data.routes) {
+      if (route.departure.icao == airport.icao ||
+          route.destination.icao == airport.icao) {
+        routesList.add(route);
+      }
+    }
+    routesList.sort((a, b) {
+      int comparison = a.departure.icao.compareTo(b.departure.icao);
+      if (comparison == 0) {
+        return a.destination.icao.compareTo(b.destination.icao);
+      }
+      return comparison;
+    });
+
+    showDialog(
       context: context,
-      builder: (BuildContext context) {
-        return Container(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Airport: ${airport.name}',
-                  style: const TextStyle(fontSize: 18)),
-              Text('City: ${airport.city}'),
-              Text('Country: ${airport.country}'),
-              Text('Coordinates: ${airport.latitude}, ${airport.longitude}'),
-            ],
+      builder: (_) {
+        return Dialog(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          shape: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide.none,
+          ),
+          child: SizedBox(
+            width: 600,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: MySpacing.all(16),
+                    child:
+                        MyText.labelLarge('${airport.name}', fontWeight: 600),
+                  ),
+                  Divider(height: 0, thickness: 1),
+                  Padding(
+                    padding: MySpacing.all(16),
+                    child: MyText.bodySmall(
+                        '${airport.city}, ${airport.country}',
+                        fontWeight: 600),
+                  ),
+                  Divider(height: 0, thickness: 1),
+                  Padding(
+                    padding: MySpacing.symmetric(horizontal: 16, vertical: 8),
+                    child: Text("Routes", style: TextStyle(fontSize: 16)),
+                  ),
+                  Column(
+                    children: routesList.map((route) {
+                      var port;
+                      if (route.departure.icao == airport.icao) {
+                        port = route.destination;
+                      } else if (route.destination.icao == airport.icao) {
+                        port = route.departure;
+                      }
+                      bool hasMatchingFlightData = flights.any((flight) =>
+                          flight.type_data == "ai" &&
+                          flight.company_id == selectedOption &&
+                          ((flight.depicao == route.departure.icao &&
+                                  flight.arricao == route.destination.icao) ||
+                              (flight.depicao == route.destination.icao &&
+                                  flight.arricao == route.departure.icao)));
+
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 15,
+                              height: 15,
+                              decoration: BoxDecoration(
+                                color:
+                                    route.verified ? Colors.green : Colors.red,
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                              child: hasMatchingFlightData
+                                  ? Icon(
+                                      Icons.flight,
+                                      size: 10,
+                                      color: Colors.white,
+                                    )
+                                  : null,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 3),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    '${port.icao}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    ' - ${port.name}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                  Padding(padding: MySpacing.all(5)),
+                  Divider(height: 0, thickness: 1),
+                  Padding(
+                    padding: MySpacing.all(20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 10,
+                                  height: 10,
+                                  decoration: BoxDecoration(
+                                    color: Colors.green,
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                ),
+                                Text(
+                                  " Verified",
+                                  style: TextStyle(fontSize: 10),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 10,
+                                  height: 10,
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                ),
+                                Text(
+                                  " Not Verified",
+                                  style: TextStyle(fontSize: 10),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                        MyButton(
+                          onPressed: () => Get.back(),
+                          elevation: 0,
+                          borderRadiusAll: 8,
+                          padding: MySpacing.xy(20, 16),
+                          backgroundColor: AppTheme.primaryColor,
+                          child: MyText.labelMedium(
+                            "Close",
+                            fontWeight: 600,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         );
       },
