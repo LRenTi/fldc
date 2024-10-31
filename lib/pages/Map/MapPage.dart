@@ -1,3 +1,4 @@
+import 'package:fldc/model/aircelerates_model.dart';
 import 'package:fldc/model/flightdata_model.dart';
 import 'package:fldc/services/api.service.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage>
     with SingleTickerProviderStateMixin, UIMixin {
   late List<FlightData> flights;
+  late List<Aircelerates> aircelerates;
 
   @override
   void initState() {
@@ -31,6 +33,7 @@ class _MapPageState extends State<MapPage>
     controller = MapControllerFLDC();
     data = CompanyRouteService.getCompanyRoutes(100172);
     _fetchFlightData();
+    _fetchAIRcelerates();
   }
 
   void _fetchFlightData() {
@@ -41,10 +44,26 @@ class _MapPageState extends State<MapPage>
       onSuccess: (response) {
         setState(() {
           flights = (response as List)
-              .map((flight) => FlightData.fromJson(flight))
+              .map((flight) =>
+                  FlightData.fromJson(flight as Map<String, dynamic>))
               .toList();
         });
-        print(flights);
+      },
+      onError: (statusCode, message) {
+        print('Error: $statusCode, $message');
+      },
+    );
+  }
+
+  void _fetchAIRcelerates() {
+    ApiService.send(
+      CrudRequest.getMethod,
+      "https://lrenti.github.io/api/flylat/auto/airoutes.json",
+      onSuccess: (response) {
+        aircelerates = (response as List)
+            .map((flight) =>
+                Aircelerates.fromJson(flight as Map<String, dynamic>))
+            .toList();
       },
       onError: (statusCode, message) {
         print('Error: $statusCode, $message');
@@ -57,10 +76,7 @@ class _MapPageState extends State<MapPage>
   String selectedOption = '100172';
 
   final List<String> dropdownOptions = [
-    '100079',
-    '100084',
     '100172',
-    '100219',
     '100269'
   ];
 
@@ -264,6 +280,23 @@ class _MapPageState extends State<MapPage>
                               (flight.depicao == route.destination.icao &&
                                   flight.arricao == route.departure.icao)));
 
+                      bool hasAircelerates = false;
+                      if (selectedOption == '100172') {
+                        hasAircelerates = aircelerates.any((flight) =>
+                            (flight.departure == route.departure.icao &&
+                                flight.destination == route.destination.icao) ||
+                            (flight.departure == route.destination.icao &&
+                                flight.destination == route.departure.icao));
+                      }
+
+                      bool activeFlight = flights.any((flight) =>
+                          flight.type_data == "real" &&
+                          flight.company_id == selectedOption &&
+                          ((flight.depicao == route.departure.icao &&
+                                  flight.arricao == route.destination.icao) ||
+                              (flight.depicao == route.destination.icao &&
+                                  flight.arricao == route.departure.icao)));
+
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Row(
@@ -278,13 +311,28 @@ class _MapPageState extends State<MapPage>
                                     route.verified ? Colors.green : Colors.red,
                                 borderRadius: BorderRadius.circular(2),
                               ),
-                              child: hasMatchingFlightData
-                                  ? Icon(
-                                      Icons.flight,
-                                      size: 10,
-                                      color: Colors.white,
+                              child: activeFlight
+                                  ? Container(
+                                      width: 15,
+                                      height: 15,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFF57B8F0),
+                                        borderRadius: BorderRadius.circular(2),
+                                      ),
                                     )
-                                  : null,
+                                  : hasMatchingFlightData
+                                      ? Icon(
+                                          Icons.flight,
+                                          size: 10,
+                                          color: Colors.white,
+                                        )
+                                      : hasAircelerates
+                                          ? Icon(
+                                              Icons.flight,
+                                              size: 10,
+                                              color: Color.fromARGB(255, 255, 187, 110),
+                                            )
+                                          : null,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 3),

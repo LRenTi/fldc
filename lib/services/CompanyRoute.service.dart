@@ -16,12 +16,12 @@ class CompanyRouteService {
       CrudRequest.getMethod,
       url,
       onSuccess: (response) {
-        companyRoutes = CompanyRoutes.fromJson(response);
+        companyRoutes = CompanyRoutes.fromJson(response as Map<String, dynamic>);
       },
       onError: (statusCode, message) {
         print('Error: $statusCode, $message');
       },
     );
-    return companyRoutes;
+    return companyRoutes ?? CompanyRoutes(routes: [], name: 'TEST', id: 0, updateTimeStamp: DateTime.now());
   }
 }
