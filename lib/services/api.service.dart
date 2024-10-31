@@ -35,7 +35,8 @@ class ApiService {
         Map<String, String> headers = {};
           if (!cors) {
             headers = {
-              '<Accept>': 'application/json'
+              '<Accept>': 'application/json',
+              "Access-Control-Allow-Origin": "*"
             };
             print("Header YES");
           }
