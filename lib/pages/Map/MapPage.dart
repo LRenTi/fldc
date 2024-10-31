@@ -78,7 +78,7 @@ class _MapPageState extends State<MapPage>
 
   final List<String> dropdownOptions = [
     '100172',
-    '100269'
+    '100269',
   ];
 
   @override
@@ -94,7 +94,18 @@ class _MapPageState extends State<MapPage>
                 child: Text(
                     'Error: ${snapshot.error}\nDetails: ${snapshot.stackTrace}'));
           } else if (snapshot.data == null || snapshot.data!.routes.isEmpty) {
-            return Center(child: Text('No routes available'));
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text('No routes available'),
+                  BackButton(
+                    onPressed: () => Get.back(),
+                  )
+                ],
+              ),
+            );
           }
 
           var routes = snapshot.data!.routes;
@@ -141,10 +152,10 @@ class _MapPageState extends State<MapPage>
                       return markers;
                     }).toList(),
                   ),
-                  LeftBar(
-                    isCondensed: true,
-                  ),
                 ],
+              ),
+              LeftBar(
+                isCondensed: true,
               ),
               Positioned(
                 top: 20,
@@ -332,7 +343,8 @@ class _MapPageState extends State<MapPage>
                                           ? Icon(
                                               Icons.flight,
                                               size: 10,
-                                              color: Color.fromARGB(255, 255, 187, 110),
+                                              color: Color.fromARGB(
+                                                  255, 255, 187, 110),
                                             )
                                           : null,
                             ),
@@ -406,7 +418,56 @@ class _MapPageState extends State<MapPage>
                                   style: TextStyle(fontSize: 10),
                                 ),
                               ],
-                            )
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 10,
+                                  height: 10,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFF57B8F0),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                ),
+                                Text(
+                                  " Active Flight",
+                                  style: TextStyle(fontSize: 10),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.flight,
+                                  size: 10,
+                                  color: Colors.grey,
+                                ),
+                                Text(
+                                  " Active AI-Flight",
+                                  style: TextStyle(fontSize: 10),
+                                ),
+                              ],
+                            ),
+                            if (selectedOption == '100172')
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.flight,
+                                    size: 10,
+                                    color: Color.fromARGB(255, 255, 187, 110),
+                                  ),
+                                  Text(
+                                    " Planned AI-Flights",
+                                    style: TextStyle(fontSize: 10),
+                                  ),
+                                ],
+                              ),
                           ],
                         ),
                         MyButton(

@@ -58,7 +58,6 @@ class ApiService {
   static Future<http.Response> _handleGetRequest(
       Uri url, Map<String, String>? headers) async {
         if(headers!.isEmpty) {
-          print("Send GET Request without Headers");
           return await http.get(url, headers: headers);
         }
         else {
