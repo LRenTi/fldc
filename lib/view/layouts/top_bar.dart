@@ -81,22 +81,22 @@ class _TopBarState extends State<TopBar>
                 //     onTap: () => searchModal(context),
                 //     child: Icon(LucideIcons.search, size: 20)),
                 // MySpacing.width(24),
-                CustomPopupMenu(
-                  backdrop: true,
-                  hideFn: (hide) => languageHideFn = hide,
-                  onChange: (_) {},
-                  offsetX: -36,
-                  offsetY: 20,
-                  menu: MyContainer(
-                      paddingAll: 0,
-                      borderRadiusAll: 4,
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      child: SvgPicture.asset(
-                          'assets/lang/${ThemeCustomizer.instance.currentLanguage.locale.languageCode}.svg',
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          height: 18)),
-                  menuBuilder: (_) => buildLanguageSelector(),
-                ),
+                // CustomPopupMenu(
+                //   backdrop: true,
+                //   hideFn: (hide) => languageHideFn = hide,
+                //   onChange: (_) {},
+                //   offsetX: -36,
+                //   offsetY: 20,
+                //   menu: MyContainer(
+                //       paddingAll: 0,
+                //       borderRadiusAll: 4,
+                //       clipBehavior: Clip.antiAliasWithSaveLayer,
+                //       child: SvgPicture.asset(
+                //           'assets/lang/${ThemeCustomizer.instance.currentLanguage.locale.languageCode}.svg',
+                //           clipBehavior: Clip.antiAliasWithSaveLayer,
+                //           height: 18)),
+                //   menuBuilder: (_) => buildLanguageSelector(),
+                // ),
                 // MySpacing.width(24),
                 // CustomPopupMenu(
                 //     backdrop: true,

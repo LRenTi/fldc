@@ -72,7 +72,7 @@ class _LeftBarState extends State<LeftBar>
                 children: [
                   InkWell(
                     onTap: () {
-                      Get.toNamed('/dashboard/analytics');
+                      Get.toNamed('/');
                     },
                     child: widget.isCondensed
                         ? SvgPicture.asset(
@@ -123,465 +123,506 @@ class _LeftBarState extends State<LeftBar>
                 child: ScrollConfiguration(
               behavior:
                   ScrollConfiguration.of(context).copyWith(scrollbars: false),
-              child: ListView(
-                shrinkWrap: true,
-                controller: ScrollController(),
-                physics: BouncingScrollPhysics(),
-                clipBehavior: Clip.antiAliasWithSaveLayer,
+              child: Column(
                 children: [
-                  labelWidget("dashboard".tr()),
-                  NavigationItem(
-                    title: "Home",
-                    isCondensed: isCondensed,
-                    iconData: LucideIcons.house,
-                    route: '/dashboard/',
-                  ),
-                  NavigationItem(
-                    title: "Map",
-                    isCondensed: isCondensed,
-                    iconData: LucideIcons.map,
-                    route: '/map/',
-                  ),
-                  labelWidget("Examples".tr()),
-                  NavigationItem(
-                    iconData: LucideIcons.layout_dashboard,
-                    title: "Analytics",
-                    isCondensed: isCondensed,
-                    route: '/dashboard/analytics',
-                  ),
-                  NavigationItem(
-                    iconData: LucideIcons.bitcoin,
-                    title: "NFT",
-                    isCondensed: isCondensed,
-                    route: '/dashboard/nft_dashboard',
-                  ),
-                  NavigationItem(
-                    iconData: LucideIcons.warehouse,
-                    title: "eCommerce",
-                    isCondensed: isCondensed,
-                    route: '/dashboard/ecommerce',
-                  ),
-                  NavigationItem(
-                    iconData: LucideIcons.heart_handshake,
-                    title: "CRM",
-                    isCondensed: isCondensed,
-                    route: '/dashboard/crm',
-                  ),
-                  NavigationItem(
-                    iconData: LucideIcons.construction,
-                    title: "Job",
-                    isCondensed: isCondensed,
-                    route: '/dashboard/job',
-                  ),
-                  NavigationItem(
-                    iconData: LucideIcons.chef_hat,
-                    title: "Food",
-                    isCondensed: isCondensed,
-                    route: '/dashboard/food',
-                  ),
-                  NavigationItem(
-                    iconData: LucideIcons.building_2,
-                    title: "Real Estate",
-                    isCondensed: isCondensed,
-                    route: '/dashboard/real_estate',
-                  ),
-                  labelWidget("apps".tr()),
-                  MenuWidget(
-                    iconData: LucideIcons.users,
-                    isCondensed: isCondensed,
-                    title: "Contact",
+                  ListView(
+                    shrinkWrap: true,
+                    controller: ScrollController(),
+                    physics: BouncingScrollPhysics(),
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
                     children: [
-                      MenuItem(
-                        title: 'Member List',
-                        route: '/app/contact/member_list',
-                        isCondensed: widget.isCondensed,
+                      labelWidget("dashboard".tr()),
+                      NavigationItem(
+                        title: "Home",
+                        isCondensed: isCondensed,
+                        iconData: LucideIcons.house,
+                        route: '/dashboard/',
                       ),
-                      MenuItem(
-                        title: 'Profile',
-                        route: '/app/contact/profile',
-                        isCondensed: widget.isCondensed,
+                      NavigationItem(
+                        title: "Map",
+                        isCondensed: isCondensed,
+                        iconData: LucideIcons.map,
+                        route: '/map/',
                       ),
+                      // labelWidget("Examples".tr()),
+                      // NavigationItem(
+                      //   iconData: LucideIcons.layout_dashboard,
+                      //   title: "Analytics",
+                      //   isCondensed: isCondensed,
+                      //   route: '/dashboard/analytics',
+                      // ),
+                      // NavigationItem(
+                      //   iconData: LucideIcons.bitcoin,
+                      //   title: "NFT",
+                      //   isCondensed: isCondensed,
+                      //   route: '/dashboard/nft_dashboard',
+                      // ),
+                      // NavigationItem(
+                      //   iconData: LucideIcons.warehouse,
+                      //   title: "eCommerce",
+                      //   isCondensed: isCondensed,
+                      //   route: '/dashboard/ecommerce',
+                      // ),
+                      // NavigationItem(
+                      //   iconData: LucideIcons.heart_handshake,
+                      //   title: "CRM",
+                      //   isCondensed: isCondensed,
+                      //   route: '/dashboard/crm',
+                      // ),
+                      // NavigationItem(
+                      //   iconData: LucideIcons.construction,
+                      //   title: "Job",
+                      //   isCondensed: isCondensed,
+                      //   route: '/dashboard/job',
+                      // ),
+                      // NavigationItem(
+                      //   iconData: LucideIcons.chef_hat,
+                      //   title: "Food",
+                      //   isCondensed: isCondensed,
+                      //   route: '/dashboard/food',
+                      // ),
+                      // NavigationItem(
+                      //   iconData: LucideIcons.building_2,
+                      //   title: "Real Estate",
+                      //   isCondensed: isCondensed,
+                      //   route: '/dashboard/real_estate',
+                      // ),
+                      // labelWidget("apps".tr()),
+                      // MenuWidget(
+                      //   iconData: LucideIcons.users,
+                      //   isCondensed: isCondensed,
+                      //   title: "Contact",
+                      //   children: [
+                      //     MenuItem(
+                      //       title: 'Member List',
+                      //       route: '/app/contact/member_list',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: 'Profile',
+                      //       route: '/app/contact/profile',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //   ],
+                      // ),
+                      // MenuWidget(
+                      //   iconData: LucideIcons.shopping_cart,
+                      //   isCondensed: isCondensed,
+                      //   title: "Ecommerce",
+                      //   children: [
+                      //     MenuItem(
+                      //       title: 'Product Grid',
+                      //       route: '/app/ecommerce/products_grid',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: 'Add Product',
+                      //       route: '/app/ecommerce/add_product',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: 'Product Detail',
+                      //       route: '/app/ecommerce/product_detail',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: 'Review',
+                      //       route: '/app/ecommerce/review',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //   ],
+                      // ),
+                      // MenuWidget(
+                      //   iconData: LucideIcons.baggage_claim,
+                      //   isCondensed: isCondensed,
+                      //   title: "Job",
+                      //   children: [
+                      //     MenuItem(
+                      //       title: 'List',
+                      //       route: '/app/job_list',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: 'Detail',
+                      //       route: '/app/job_detail',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //   ],
+                      // ),
+                      // NavigationItem(
+                      //   iconData: LucideIcons.calendar_range,
+                      //   title: "Calendar",
+                      //   isCondensed: isCondensed,
+                      //   route: '/app/calendar',
+                      // ),
+                      // NavigationItem(
+                      //   iconData: LucideIcons.message_square,
+                      //   title: "Chat",
+                      //   isCondensed: isCondensed,
+                      //   route: '/app/chat',
+                      // ),
+                      // NavigationItem(
+                      //   iconData: LucideIcons.folder_closed,
+                      //   title: "File Manager",
+                      //   isCondensed: isCondensed,
+                      //   route: '/app/file_manager',
+                      // ),
+                      // NavigationItem(
+                      //   iconData: LucideIcons.folder_kanban,
+                      //   title: "Kanban",
+                      //   isCondensed: isCondensed,
+                      //   route: '/app/kanban_board',
+                      // ),
+                      // NavigationItem(
+                      //   iconData: LucideIcons.shopping_bag,
+                      //   title: "POS",
+                      //   isCondensed: isCondensed,
+                      //   route: '/app/pos',
+                      // ),
+                      // labelWidget("pages".tr()),
+                      // MenuWidget(
+                      //   iconData: LucideIcons.key_round,
+                      //   isCondensed: isCondensed,
+                      //   title: "Auth",
+                      //   children: [
+                      //     MenuItem(
+                      //       title: 'Login',
+                      //       route: '/auth/login',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: 'Register Password',
+                      //       route: '/auth/register_account',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: 'Forgot Password',
+                      //       route: '/auth/forgot_password',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: 'Reset Password',
+                      //       route: '/auth/reset_password',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //   ],
+                      // ),
+                      // MenuWidget(
+                      //   iconData: LucideIcons.key_round,
+                      //   isCondensed: isCondensed,
+                      //   title: "Auth 2",
+                      //   children: [
+                      //     MenuItem(
+                      //       title: 'Login 2',
+                      //       route: '/auth_2/login',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: 'Forgot Password 2',
+                      //       route: '/auth_2/forgot_password',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //         title: 'Reset Password 2',
+                      //         route: '/auth_2/reset_password',
+                      //         isCondensed: widget.isCondensed),
+                      //     MenuItem(
+                      //         title: 'Register Account 2',
+                      //         route: '/auth_2/register_account',
+                      //         isCondensed: widget.isCondensed),
+                      //   ],
+                      // ),
+                      // MenuWidget(
+                      //   iconData: LucideIcons.component,
+                      //   isCondensed: isCondensed,
+                      //   title: "Widgets",
+                      //   children: [
+                      //     MenuItem(
+                      //       title: "Buttons",
+                      //       route: '/widget/buttons',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: "Toast",
+                      //       route: '/widget/toast',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: "Modal",
+                      //       route: '/widget/modal',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: "Tabs",
+                      //       route: '/widget/tabs',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: "Cards",
+                      //       route: '/widget/cards',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: "Loaders",
+                      //       route: '/widget/loader',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: "Dialog",
+                      //       route: '/widget/dialog',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: "Carousels",
+                      //       route: '/widget/carousel',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: "Drag & Drop",
+                      //       route: '/widget/drag_n_drop',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: "Notifications",
+                      //       route: '/widget/notification',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //   ],
+                      // ),
+                      // MenuWidget(
+                      //   iconData: LucideIcons.book_open_check,
+                      //   title: "Form",
+                      //   isCondensed: isCondensed,
+                      //   children: [
+                      //     MenuItem(
+                      //       title: "Basic Input",
+                      //       route: '/form/basic_input',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: "Custom Option",
+                      //       route: '/form/custom_option',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: "Editor",
+                      //       route: '/form/editor',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: "File Upload",
+                      //       route: '/form/file_upload',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: "Slider",
+                      //       route: '/form/slider',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: "Validation",
+                      //       route: '/form/validation',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: "Mask",
+                      //       route: '/form/mask',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //   ],
+                      // ),
+                      // MenuWidget(
+                      //   iconData: LucideIcons.shield_alert,
+                      //   isCondensed: isCondensed,
+                      //   title: "Error",
+                      //   children: [
+                      //     MenuItem(
+                      //       title: 'Error 404',
+                      //       route: '/error/404',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: 'Error 500',
+                      //       route: '/error/500',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: 'Coming Soon',
+                      //       route: '/error/coming_soon',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //   ],
+                      // ),
+                      // MenuWidget(
+                      //   iconData: LucideIcons.book_open_check,
+                      //   isCondensed: isCondensed,
+                      //   title: "Extra Pages",
+                      //   children: [
+                      //     MenuItem(
+                      //       title: 'FAQs',
+                      //       route: '/extra/faqs',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: 'Pricing',
+                      //       route: '/extra/pricing',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //     MenuItem(
+                      //       title: 'Time Line',
+                      //       route: '/extra/time_line',
+                      //       isCondensed: widget.isCondensed,
+                      //     ),
+                      //   ],
+                      // ),
+                      // labelWidget("other".tr()),
+                      // NavigationItem(
+                      //   iconData: LucideIcons.table,
+                      //   title: "Basic Table",
+                      //   isCondensed: isCondensed,
+                      //   route: '/other/basic_table',
+                      // ),
+                      // NavigationItem(
+                      //   iconData: LucideIcons.map,
+                      //   title: "Map",
+                      //   isCondensed: isCondensed,
+                      //   route: '/other/map',
+                      // ),
+                      // NavigationItem(
+                      //   iconData: LucideIcons.chart_bar,
+                      //   title: "Syncfusion",
+                      //   isCondensed: isCondensed,
+                      //   route: '/other/syncfusion_chart',
+                      // ),
+                      // MySpacing.height(20),
+                      // if (!isCondensed)
+                      //   InkWell(
+                      //     onTap: () {
+                      //       UrlService.goToPagger();
+                      //     },
+                      //     child: Padding(
+                      //         padding: MySpacing.x(16),
+                      //         child: Container(
+                      //           padding: EdgeInsets.symmetric(
+                      //               vertical: 16, horizontal: 16),
+                      //           decoration: BoxDecoration(
+                      //               borderRadius: BorderRadius.circular(
+                      //                   8), // color: contentTheme.primary.withAlpha(40),
+                      //               gradient: LinearGradient(
+                      //                   colors: const [
+                      //                     Colors.deepPurple,
+                      //                     Colors.lightBlue
+                      //                   ],
+                      //                   begin: Alignment.topLeft,
+                      //                   end: Alignment.bottomRight)),
+                      //           child: Column(
+                      //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //             children: [
+                      //               Container(
+                      //                 padding: EdgeInsets.all(8),
+                      //                 decoration: BoxDecoration(
+                      //                   borderRadius: BorderRadius.circular(8),
+                      //                   color: Colors.white.withAlpha(32),
+                      //                 ),
+                      //                 child: Icon(LucideIcons.layout_dashboard,
+                      //                     color: Colors.white),
+                      //               ),
+                      //               SizedBox(
+                      //                 height: 16,
+                      //               ),
+                      //               MyText.bodyLarge(
+                      //                 "Ready to use page for any Flutter Project",
+                      //                 color: Colors.white,
+                      //                 textAlign: TextAlign.center,
+                      //               ),
+                      //               SizedBox(
+                      //                 height: 16,
+                      //               ),
+                      //               Container(
+                      //                 padding: EdgeInsets.symmetric(
+                      //                     vertical: 8, horizontal: 16),
+                      //                 decoration: BoxDecoration(
+                      //                   borderRadius: BorderRadius.circular(4),
+                      //                   color: Colors.white,
+                      //                 ),
+                      //                 child: MyText.bodyMedium(
+                      //                   "Free Download",
+                      //                   color: Colors.black,
+                      //                   fontWeight: 600,
+                      //                 ),
+                      //               )
+                      //             ],
+                      //           ),
+                      //         )),
+                      //   ),
+                      // if (isCondensed)
+                      //   InkWell(
+                      //     onTap: () {
+                      //       UrlService.goToPagger();
+                      //     },
+                      //     child: Padding(
+                      //         padding: MySpacing.x(12),
+                      //         child: Container(
+                      //           padding: EdgeInsets.all(8),
+                      //           decoration: BoxDecoration(
+                      //               borderRadius: BorderRadius.circular(
+                      //                   4), // color: contentTheme.primary.withAlpha(40),
+                      //               gradient: LinearGradient(
+                      //                   colors: const [
+                      //                     Colors.deepPurple,
+                      //                     Colors.lightBlue
+                      //                   ],
+                      //                   begin: Alignment.topLeft,
+                      //                   end: Alignment.bottomRight)),
+                      //           child: Center(
+                      //             child: Icon(
+                      //               LucideIcons.download,
+                      //               color: Colors.white,
+                      //               size: 20,
+                      //             ),
+                      //           ),
+                      //         )),
+                      //   ),
+                      MySpacing.height(20),
                     ],
                   ),
-                  MenuWidget(
-                    iconData: LucideIcons.shopping_cart,
-                    isCondensed: isCondensed,
-                    title: "Ecommerce",
-                    children: [
-                      MenuItem(
-                        title: 'Product Grid',
-                        route: '/app/ecommerce/products_grid',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: 'Add Product',
-                        route: '/app/ecommerce/add_product',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: 'Product Detail',
-                        route: '/app/ecommerce/product_detail',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: 'Review',
-                        route: '/app/ecommerce/review',
-                        isCondensed: widget.isCondensed,
-                      ),
-                    ],
-                  ),
-                  MenuWidget(
-                    iconData: LucideIcons.baggage_claim,
-                    isCondensed: isCondensed,
-                    title: "Job",
-                    children: [
-                      MenuItem(
-                        title: 'List',
-                        route: '/app/job_list',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: 'Detail',
-                        route: '/app/job_detail',
-                        isCondensed: widget.isCondensed,
-                      ),
-                    ],
-                  ),
-                  NavigationItem(
-                    iconData: LucideIcons.calendar_range,
-                    title: "Calendar",
-                    isCondensed: isCondensed,
-                    route: '/app/calendar',
-                  ),
-                  NavigationItem(
-                    iconData: LucideIcons.message_square,
-                    title: "Chat",
-                    isCondensed: isCondensed,
-                    route: '/app/chat',
-                  ),
-                  NavigationItem(
-                    iconData: LucideIcons.folder_closed,
-                    title: "File Manager",
-                    isCondensed: isCondensed,
-                    route: '/app/file_manager',
-                  ),
-                  NavigationItem(
-                    iconData: LucideIcons.folder_kanban,
-                    title: "Kanban",
-                    isCondensed: isCondensed,
-                    route: '/app/kanban_board',
-                  ),
-                  NavigationItem(
-                    iconData: LucideIcons.shopping_bag,
-                    title: "POS",
-                    isCondensed: isCondensed,
-                    route: '/app/pos',
-                  ),
-                  labelWidget("pages".tr()),
-                  MenuWidget(
-                    iconData: LucideIcons.key_round,
-                    isCondensed: isCondensed,
-                    title: "Auth",
-                    children: [
-                      MenuItem(
-                        title: 'Login',
-                        route: '/auth/login',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: 'Register Password',
-                        route: '/auth/register_account',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: 'Forgot Password',
-                        route: '/auth/forgot_password',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: 'Reset Password',
-                        route: '/auth/reset_password',
-                        isCondensed: widget.isCondensed,
-                      ),
-                    ],
-                  ),
-                  MenuWidget(
-                    iconData: LucideIcons.key_round,
-                    isCondensed: isCondensed,
-                    title: "Auth 2",
-                    children: [
-                      MenuItem(
-                        title: 'Login 2',
-                        route: '/auth_2/login',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: 'Forgot Password 2',
-                        route: '/auth_2/forgot_password',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                          title: 'Reset Password 2',
-                          route: '/auth_2/reset_password',
-                          isCondensed: widget.isCondensed),
-                      MenuItem(
-                          title: 'Register Account 2',
-                          route: '/auth_2/register_account',
-                          isCondensed: widget.isCondensed),
-                    ],
-                  ),
-                  MenuWidget(
-                    iconData: LucideIcons.component,
-                    isCondensed: isCondensed,
-                    title: "Widgets",
-                    children: [
-                      MenuItem(
-                        title: "Buttons",
-                        route: '/widget/buttons',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: "Toast",
-                        route: '/widget/toast',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: "Modal",
-                        route: '/widget/modal',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: "Tabs",
-                        route: '/widget/tabs',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: "Cards",
-                        route: '/widget/cards',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: "Loaders",
-                        route: '/widget/loader',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: "Dialog",
-                        route: '/widget/dialog',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: "Carousels",
-                        route: '/widget/carousel',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: "Drag & Drop",
-                        route: '/widget/drag_n_drop',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: "Notifications",
-                        route: '/widget/notification',
-                        isCondensed: widget.isCondensed,
-                      ),
-                    ],
-                  ),
-                  MenuWidget(
-                    iconData: LucideIcons.book_open_check,
-                    title: "Form",
-                    isCondensed: isCondensed,
-                    children: [
-                      MenuItem(
-                        title: "Basic Input",
-                        route: '/form/basic_input',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: "Custom Option",
-                        route: '/form/custom_option',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: "Editor",
-                        route: '/form/editor',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: "File Upload",
-                        route: '/form/file_upload',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: "Slider",
-                        route: '/form/slider',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: "Validation",
-                        route: '/form/validation',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: "Mask",
-                        route: '/form/mask',
-                        isCondensed: widget.isCondensed,
-                      ),
-                    ],
-                  ),
-                  MenuWidget(
-                    iconData: LucideIcons.shield_alert,
-                    isCondensed: isCondensed,
-                    title: "Error",
-                    children: [
-                      MenuItem(
-                        title: 'Error 404',
-                        route: '/error/404',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: 'Error 500',
-                        route: '/error/500',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: 'Coming Soon',
-                        route: '/error/coming_soon',
-                        isCondensed: widget.isCondensed,
-                      ),
-                    ],
-                  ),
-                  MenuWidget(
-                    iconData: LucideIcons.book_open_check,
-                    isCondensed: isCondensed,
-                    title: "Extra Pages",
-                    children: [
-                      MenuItem(
-                        title: 'FAQs',
-                        route: '/extra/faqs',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: 'Pricing',
-                        route: '/extra/pricing',
-                        isCondensed: widget.isCondensed,
-                      ),
-                      MenuItem(
-                        title: 'Time Line',
-                        route: '/extra/time_line',
-                        isCondensed: widget.isCondensed,
-                      ),
-                    ],
-                  ),
-                  labelWidget("other".tr()),
-                  NavigationItem(
-                    iconData: LucideIcons.table,
-                    title: "Basic Table",
-                    isCondensed: isCondensed,
-                    route: '/other/basic_table',
-                  ),
-                  NavigationItem(
-                    iconData: LucideIcons.map,
-                    title: "Map",
-                    isCondensed: isCondensed,
-                    route: '/other/map',
-                  ),
-                  NavigationItem(
-                    iconData: LucideIcons.chart_bar,
-                    title: "Syncfusion",
-                    isCondensed: isCondensed,
-                    route: '/other/syncfusion_chart',
-                  ),
-                  MySpacing.height(20),
                   if (!isCondensed)
-                    InkWell(
-                      onTap: () {
-                        UrlService.goToPagger();
-                      },
-                      child: Padding(
-                          padding: MySpacing.x(16),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 16, horizontal: 16),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                    8), // color: contentTheme.primary.withAlpha(40),
-                                gradient: LinearGradient(
-                                    colors: const [
-                                      Colors.deepPurple,
-                                      Colors.lightBlue
-                                    ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight)),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    Flexible(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Spacer(),
+                          Container(
+                            padding: MySpacing.bottom(8),
+                            alignment: Alignment.bottomCenter,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Container(
-                                  padding: EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: Colors.white.withAlpha(32),
+                                Text(
+                                  "with ",
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 12,
                                   ),
-                                  child: Icon(LucideIcons.layout_dashboard,
-                                      color: Colors.white),
                                 ),
-                                SizedBox(
-                                  height: 16,
+                                Icon(
+                                  LucideIcons.heart,
+                                  color: Colors.red,
+                                  size: 12,
                                 ),
-                                MyText.bodyLarge(
-                                  "Ready to use page for any Flutter Project",
-                                  color: Colors.white,
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(
-                                  height: 16,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 8, horizontal: 16),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(4),
-                                    color: Colors.white,
+                                Text(
+                                  " by AVIAN Air",
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 12,
                                   ),
-                                  child: MyText.bodyMedium(
-                                    "Free Download",
-                                    color: Colors.black,
-                                    fontWeight: 600,
-                                  ),
-                                )
+                                ),
                               ],
                             ),
-                          )),
+                          ),
+                        ],
+                      ),
                     ),
-                  if (isCondensed)
-                    InkWell(
-                      onTap: () {
-                        UrlService.goToPagger();
-                      },
-                      child: Padding(
-                          padding: MySpacing.x(12),
-                          child: Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                    4), // color: contentTheme.primary.withAlpha(40),
-                                gradient: LinearGradient(
-                                    colors: const [
-                                      Colors.deepPurple,
-                                      Colors.lightBlue
-                                    ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight)),
-                            child: Center(
-                              child: Icon(
-                                LucideIcons.download,
-                                color: Colors.white,
-                                size: 20,
-                              ),
-                            ),
-                          )),
-                    ),
-                  MySpacing.height(20),
                 ],
               ),
             ))
