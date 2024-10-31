@@ -26,7 +26,7 @@ class ApiService {
   }) async {
     var url = Uri.parse(path);
     if(cors){
-      url = Uri.parse('https://cors-anywhere.herokuapp.com/' + path);
+      url = Uri.parse('https://corsproxy.io/?' + path);
     }
 
     try {
@@ -35,8 +35,7 @@ class ApiService {
         Map<String, String> headers = {};
           if (!cors) {
             headers = {
-              '<Accept>': 'application/json',
-              "Access-Control-Allow-Origin": "*"
+              '<Accept>': 'application/json'
             };
             print("Header YES");
           }

@@ -41,7 +41,7 @@ class _MapPageState extends State<MapPage>
     ApiService.send(
       CrudRequest.getMethod,
       "https://flylat.net/flylat_connect/map/mapper_all/getDataAi.php",
-      cors: false,
+      cors: true,
       onSuccess: (response) {
         setState(() {
           flights = (response as List)
