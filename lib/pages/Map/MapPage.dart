@@ -1,6 +1,9 @@
+import 'package:fldc/controller/AirlineController.dart';
 import 'package:fldc/model/aircelerates_model.dart';
+import 'package:fldc/model/airline_model.dart';
 import 'package:fldc/model/flightdata_model.dart';
 import 'package:fldc/services/api.service.dart';
+import 'package:fldc/view/ui/toast_message_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
@@ -14,6 +17,7 @@ import 'package:fldc/helpers/widgets/my_text.dart';
 import 'package:fldc/model/routes_model.dart';
 import 'package:fldc/services/CompanyRoute.service.dart';
 import 'package:fldc/view/layouts/left_bar.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -24,179 +28,144 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage>
     with SingleTickerProviderStateMixin, UIMixin {
-  late List<FlightData> flights;
-  late List<Aircelerates> aircelerates;
+  late List<FlightData> flights = [];
+  late List<Aircelerates> aircelerates = [];
+  late MapPageController controller;
+  late Future<CompanyRoutes> data;
+  Airline? selectedOption;
+  final Airlinecontroller airlineController = Get.find();
+  late List<Airline> dropdownOptions = [];
 
   @override
   void initState() {
     super.initState();
-    controller = MapControllerFLDC();
-    data = CompanyRouteService.getCompanyRoutes(100172);
-    flights = [];
-    _fetchFlightData();
-    _fetchAIRcelerates();
+    controller = MapPageController.instance;
+    dropdownOptions = airlineController.airlines;
+    selectedOption = dropdownOptions.firstWhere(
+        (airline) => airline.id == '100172',
+        orElse: () => dropdownOptions.first);
+    controller.getCompanyRoutes(selectedOption!.id);
   }
-
-  void _fetchFlightData() {
-    ApiService.send(
-      CrudRequest.getMethod,
-      "https://flylat.net/flylat_connect/map/mapper_all/getDataAi.php",
-      cors: true,
-      onSuccess: (response) {
-        setState(() {
-          flights = (response as List)
-              .map((flight) =>
-                  FlightData.fromJson(flight as Map<String, dynamic>))
-              .toList();
-        });
-      },
-      onError: (statusCode, message) {
-        print('Error: $statusCode, $message');
-      },
-    );
-  }
-
-  void _fetchAIRcelerates() {
-    ApiService.send(
-      CrudRequest.getMethod,
-      "https://lrenti.github.io/api/flylat/auto/airoutes.json",
-      onSuccess: (response) {
-        aircelerates = (response as List)
-            .map((flight) =>
-                Aircelerates.fromJson(flight as Map<String, dynamic>))
-            .toList();
-      },
-      onError: (statusCode, message) {
-        print('Error: $statusCode, $message');
-      },
-    );
-  }
-
-  late MapControllerFLDC controller;
-  late Future<CompanyRoutes> data;
-  String selectedOption = '100172';
-
-  final List<String> dropdownOptions = [
-    '100172',
-    '100269',
-  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: data,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(
-                child: Text(
-                    'Error: ${snapshot.error}\nDetails: ${snapshot.stackTrace}'));
-          } else if (snapshot.data == null || snapshot.data!.routes.isEmpty) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('No routes available'),
-                  BackButton(
-                    onPressed: () => Get.back(),
-                  )
-                ],
-              ),
-            );
-          }
-
-          var routes = snapshot.data!.routes;
-          final Set<String> airportICOs = {};
-
-          return Stack(
-            children: [
-              FlutterMap(
-                options: MapOptions(
-                  initialCenter: LatLng(51.0, 10.0),
-                  initialZoom: 4.0,
-                ),
-                children: [
-                  TileLayer(
-                    urlTemplate:
-                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    userAgentPackageName: 'dev.fleaflet.flutter_map.example',
-                  ),
-                  PolylineLayer(
-                    polylines: routes
-                        .map((route) => Polyline(
-                              points: [
-                                LatLng(route.departure.latitude,
-                                    route.departure.longitude),
-                                LatLng(route.destination.latitude,
-                                    route.destination.longitude),
-                              ],
-                              strokeWidth: 2.0,
-                              color: const Color.fromARGB(255, 95, 95, 95),
-                            ))
-                        .toList(),
-                  ),
-                  MarkerLayer(
-                    markers: routes.expand((route) {
-                      List<Marker> markers = [];
-                      if (airportICOs.add(route.departure.icao)) {
-                        markers.add(_buildAirportMarker(
-                            context, route.departure, snapshot.data!));
-                      }
-                      if (airportICOs.add(route.destination.icao)) {
-                        markers.add(_buildAirportMarker(
-                            context, route.destination, snapshot.data!));
-                      }
-                      return markers;
-                    }).toList(),
-                  ),
-                ],
-              ),
-              LeftBar(
-                isCondensed: true,
-              ),
-              Positioned(
-                top: 20,
-                left: MediaQuery.of(context).size.width / 2 - 100,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: DropdownButton<String>(
-                    dropdownColor: Colors.white,
-                    value: selectedOption,
-                    items: dropdownOptions.map((String option) {
-                      return DropdownMenuItem<String>(
-                        value: option,
-                        child: Text(option),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedOption = newValue!;
-                        data = CompanyRouteService.getCompanyRoutes(
-                            selectedOption);
-                      });
-                    },
-                  ),
-                ),
-              ),
-            ],
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return Center(
+            child: LoadingAnimationWidget.threeArchedCircle(
+                color: contentTheme.primary, size: 40),
           );
-        },
-      ),
+        }
+
+        final snapshotData = controller.companyRoutes.value;
+
+        // if (snapshotData.routes.isEmpty) {
+        //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        //     clipBehavior: Clip.antiAliasWithSaveLayer,
+        //     elevation: 0,
+        //     shape: OutlineInputBorder(
+        //         borderRadius: BorderRadius.circular(8),
+        //         borderSide: BorderSide.none),
+        //     width: 300,
+        //     behavior: SnackBarBehavior.floating,
+        //     duration: Duration(milliseconds: 1200),
+        //     content: MyText.labelLarge("Something went wrong",
+        //         fontWeight: 600, color: contentTheme.onPrimary),
+        //     backgroundColor: contentTheme.primary,
+        //   ));
+        // }
+
+        var routes = snapshotData.routes;
+        final Set<String> airportICOs = {};
+
+        return Stack(
+          children: [
+            FlutterMap(
+              options: MapOptions(
+                initialCenter: LatLng(51.0, 10.0),
+                initialZoom: 4.0,
+              ),
+              children: [
+                TileLayer(
+                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  userAgentPackageName: 'dev.fleaflet.flutter_map.example',
+                ),
+                PolylineLayer(
+                  polylines: routes
+                      .map((route) => Polyline(
+                            points: [
+                              LatLng(route.departure.latitude,
+                                  route.departure.longitude),
+                              LatLng(route.destination.latitude,
+                                  route.destination.longitude),
+                            ],
+                            strokeWidth: 2.0,
+                            color: const Color.fromARGB(255, 95, 95, 95),
+                          ))
+                      .toList(),
+                ),
+                MarkerLayer(
+                  markers: routes.expand((route) {
+                    List<Marker> markers = [];
+                    if (airportICOs.add(route.departure.icao)) {
+                      markers.add(_buildAirportMarker(
+                          context, route.departure, snapshotData));
+                    }
+                    if (airportICOs.add(route.destination.icao)) {
+                      markers.add(_buildAirportMarker(
+                          context, route.destination, snapshotData));
+                    }
+                    return markers;
+                  }).toList(),
+                ),
+              ],
+            ),
+            LeftBar(
+              isCondensed: true,
+            ),
+            Positioned(
+              top: 20,
+              left: MediaQuery.of(context).size.width / 2 - 100,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: DropdownButton<String>(
+                  dropdownColor: Colors.white,
+                  value: selectedOption?.id,
+                  items: dropdownOptions
+                      .map<DropdownMenuItem<String>>((Airline option) {
+                    return DropdownMenuItem<String>(
+                      value: option.id,
+                      child: Text(option.name),
+                    );
+                  }).toList(),
+                  onChanged: (String? value) {
+                    if (value != null) {
+                      setState(() {
+                        selectedOption = dropdownOptions
+                            .firstWhere((airline) => airline.id == value);
+                        controller.getCompanyRoutes(value);
+                      });
+                    }
+                  },
+                ),
+              ),
+            ),
+          ],
+        );
+      }),
     );
   }
 
@@ -247,248 +216,264 @@ class _MapPageState extends State<MapPage>
     showDialog(
       context: context,
       builder: (_) {
-        return Dialog(
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          shape: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide.none,
-          ),
-          child: SizedBox(
-            width: 600,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: MySpacing.all(16),
-                    child:
-                        MyText.labelLarge('${airport.name}', fontWeight: 600),
-                  ),
-                  Divider(height: 0, thickness: 1),
-                  Padding(
-                    padding: MySpacing.all(16),
-                    child: MyText.bodySmall(
-                        '${airport.city}, ${airport.country}',
-                        fontWeight: 600),
-                  ),
-                  Divider(height: 0, thickness: 1),
-                  Padding(
-                    padding: MySpacing.symmetric(horizontal: 16, vertical: 8),
-                    child: Text("Routes", style: TextStyle(fontSize: 16)),
-                  ),
-                  Column(
-                    children: routesList.map((route) {
-                      var port;
-                      if (route.departure.icao == airport.icao) {
-                        port = route.destination;
-                      } else if (route.destination.icao == airport.icao) {
-                        port = route.departure;
-                      }
-                      bool hasMatchingFlightData = flights.any((flight) =>
-                          flight.type_data == "ai" &&
-                          flight.company_id == selectedOption &&
-                          ((flight.depicao == route.departure.icao &&
-                                  flight.arricao == route.destination.icao) ||
-                              (flight.depicao == route.destination.icao &&
-                                  flight.arricao == route.departure.icao)));
+        return Obx(
+          () {
+            flights = controller.flights;
+            aircelerates = controller.aircelerates;
 
-                      bool hasAircelerates = false;
-                      if (selectedOption == '100172') {
-                        hasAircelerates = aircelerates.any((flight) =>
-                            (flight.departure == route.departure.icao &&
-                                flight.destination == route.destination.icao) ||
-                            (flight.departure == route.destination.icao &&
-                                flight.destination == route.departure.icao));
-                      }
+            return Dialog(
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              shape: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide.none,
+              ),
+              child: SizedBox(
+                width: 600,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: MySpacing.all(16),
+                        child: MyText.labelLarge('${airport.name}',
+                            fontWeight: 600),
+                      ),
+                      Divider(height: 0, thickness: 1),
+                      Padding(
+                        padding: MySpacing.all(16),
+                        child: MyText.bodySmall(
+                            '${airport.city}, ${airport.country}',
+                            fontWeight: 600),
+                      ),
+                      Divider(height: 0, thickness: 1),
+                      Padding(
+                        padding:
+                            MySpacing.symmetric(horizontal: 16, vertical: 8),
+                        child: Text("Routes", style: TextStyle(fontSize: 16)),
+                      ),
+                      Column(
+                        children: routesList.map((route) {
+                          var port;
+                          if (route.departure.icao == airport.icao) {
+                            port = route.destination;
+                          } else if (route.destination.icao == airport.icao) {
+                            port = route.departure;
+                          }
+                          bool hasMatchingFlightData = flights.any((flight) =>
+                              flight.type_data == "ai" &&
+                              flight.company_id == selectedOption!.id &&
+                              ((flight.depicao == route.departure.icao &&
+                                      flight.arricao ==
+                                          route.destination.icao) ||
+                                  (flight.depicao == route.destination.icao &&
+                                      flight.arricao == route.departure.icao)));
 
-                      bool activeFlight = flights.any((flight) =>
-                          flight.type_data == "real" &&
-                          flight.company_id == selectedOption &&
-                          ((flight.depicao == route.departure.icao &&
-                                  flight.arricao == route.destination.icao) ||
-                              (flight.depicao == route.destination.icao &&
-                                  flight.arricao == route.departure.icao)));
+                          bool hasAircelerates = false;
+                          if (selectedOption!.id == '100172') {
+                            hasAircelerates = aircelerates.any((flight) =>
+                                (flight.departure == route.departure.icao &&
+                                    flight.destination ==
+                                        route.destination.icao) ||
+                                (flight.departure == route.destination.icao &&
+                                    flight.destination ==
+                                        route.departure.icao));
+                          }
 
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 15,
-                              height: 15,
-                              decoration: BoxDecoration(
-                                color:
-                                    route.verified ? Colors.green : Colors.red,
-                                borderRadius: BorderRadius.circular(2),
-                              ),
-                              child: activeFlight
-                                  ? Container(
-                                      width: 15,
-                                      height: 15,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFF57B8F0),
-                                        borderRadius: BorderRadius.circular(2),
-                                      ),
-                                    )
-                                  : hasMatchingFlightData
-                                      ? Icon(
-                                          Icons.flight,
-                                          size: 10,
-                                          color: Colors.white,
+                          bool activeFlight = flights.any((flight) =>
+                              flight.type_data == "real" &&
+                              flight.company_id == selectedOption!.id &&
+                              ((flight.depicao == route.departure.icao &&
+                                      flight.arricao ==
+                                          route.destination.icao) ||
+                                  (flight.depicao == route.destination.icao &&
+                                      flight.arricao == route.departure.icao)));
+
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 15,
+                                  height: 15,
+                                  decoration: BoxDecoration(
+                                    color: route.verified
+                                        ? Colors.green
+                                        : Colors.red,
+                                    borderRadius: BorderRadius.circular(2),
+                                  ),
+                                  child: activeFlight
+                                      ? Container(
+                                          width: 15,
+                                          height: 15,
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFF57B8F0),
+                                            borderRadius:
+                                                BorderRadius.circular(2),
+                                          ),
                                         )
-                                      : hasAircelerates
+                                      : hasMatchingFlightData
                                           ? Icon(
                                               Icons.flight,
                                               size: 10,
-                                              color: Color.fromARGB(
-                                                  255, 255, 187, 110),
+                                              color: Colors.white,
                                             )
-                                          : null,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 3),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    '${port.icao}',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                          : hasAircelerates
+                                              ? Icon(
+                                                  Icons.flight,
+                                                  size: 10,
+                                                  color: Color.fromARGB(
+                                                      255, 255, 187, 110),
+                                                )
+                                              : null,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 3),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        '${port.icao}',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        ' - ${port.name}',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Text(
-                                    ' - ${port.name}',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                  Padding(padding: MySpacing.all(5)),
-                  Divider(height: 0, thickness: 1),
-                  Padding(
-                    padding: MySpacing.all(20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          );
+                        }).toList(),
+                      ),
+                      Padding(padding: MySpacing.all(5)),
+                      Divider(height: 0, thickness: 1),
+                      Padding(
+                        padding: MySpacing.all(20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                            Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  width: 10,
-                                  height: 10,
-                                  decoration: BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(5),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: 10,
+                                      height: 10,
+                                      decoration: BoxDecoration(
+                                        color: Colors.green,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                    ),
+                                    Text(
+                                      " Verified",
+                                      style: TextStyle(fontSize: 10),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: 10,
+                                      height: 10,
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                    ),
+                                    Text(
+                                      " Not Verified",
+                                      style: TextStyle(fontSize: 10),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: 10,
+                                      height: 10,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFF57B8F0),
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                    ),
+                                    Text(
+                                      " Active Flight",
+                                      style: TextStyle(fontSize: 10),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      Icons.flight,
+                                      size: 10,
+                                      color: Colors.grey,
+                                    ),
+                                    Text(
+                                      " Active AI-Flight",
+                                      style: TextStyle(fontSize: 10),
+                                    ),
+                                  ],
+                                ),
+                                if (selectedOption!.id == '100172')
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Icon(
+                                        Icons.flight,
+                                        size: 10,
+                                        color:
+                                            Color.fromARGB(255, 255, 187, 110),
+                                      ),
+                                      Text(
+                                        " Planned AI-Flights",
+                                        style: TextStyle(fontSize: 10),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                Text(
-                                  " Verified",
-                                  style: TextStyle(fontSize: 10),
-                                ),
                               ],
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 10,
-                                  height: 10,
-                                  decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                ),
-                                Text(
-                                  " Not Verified",
-                                  style: TextStyle(fontSize: 10),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 10,
-                                  height: 10,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFF57B8F0),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                ),
-                                Text(
-                                  " Active Flight",
-                                  style: TextStyle(fontSize: 10),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  Icons.flight,
-                                  size: 10,
-                                  color: Colors.grey,
-                                ),
-                                Text(
-                                  " Active AI-Flight",
-                                  style: TextStyle(fontSize: 10),
-                                ),
-                              ],
-                            ),
-                            if (selectedOption == '100172')
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Icon(
-                                    Icons.flight,
-                                    size: 10,
-                                    color: Color.fromARGB(255, 255, 187, 110),
-                                  ),
-                                  Text(
-                                    " Planned AI-Flights",
-                                    style: TextStyle(fontSize: 10),
-                                  ),
-                                ],
+                            MyButton(
+                              onPressed: () => Get.back(),
+                              elevation: 0,
+                              borderRadiusAll: 8,
+                              padding: MySpacing.xy(20, 16),
+                              backgroundColor: AppTheme.primaryColor,
+                              child: MyText.labelMedium(
+                                "Close",
+                                fontWeight: 600,
+                                color: Colors.white,
                               ),
+                            ),
                           ],
                         ),
-                        MyButton(
-                          onPressed: () => Get.back(),
-                          elevation: 0,
-                          borderRadiusAll: 8,
-                          padding: MySpacing.xy(20, 16),
-                          backgroundColor: AppTheme.primaryColor,
-                          child: MyText.labelMedium(
-                            "Close",
-                            fontWeight: 600,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
+            );
+          },
         );
       },
     );

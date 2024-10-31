@@ -21,6 +21,11 @@ class CompanyRoutes {
           .toList(),
     );
   }
+
+  @override
+  String toString() {
+    return 'CompanyRoutes{name: $name, id: $id, updateTimeStamp: $updateTimeStamp, routes: $routes}';
+  }
 }
 
 class Routes {
@@ -42,16 +47,22 @@ class Routes {
     required this.destination,
   });
 
-  factory Routes.fromJson(Map<String, dynamic> json) {
-    return Routes(
-      id: json['route_id'] as int,
-      profit: json['profit'] as int,
-      distance: json['distance'] as String,
-      flown: json['flown'] as int,
-      verified: json['verified'] == "1",  // String "1"/"0" in bool umwandeln
-      departure: Airport.fromJson(json['departure']),
-      destination: Airport.fromJson(json['destination']),
-    );
+factory Routes.fromJson(Map<String, dynamic> json) {
+  return Routes(
+    id: json['route_id'] as int,
+    profit: json['profit'] as int,
+    distance: json['distance'] as String? ?? '', // Setze einen Standardwert
+    flown: json['flown'] as int,
+    verified: json['verified'] == "1",
+    departure: Airport.fromJson(json['departure'] ?? {}), // Wenn null, leeres Map
+    destination: Airport.fromJson(json['destination'] ?? {}), // Wenn null, leeres Map
+  );
+}
+
+
+  @override
+  String toString() {
+    return 'Routes{id: $id, profit: $profit, distance: $distance, flown: $flown, verified: $verified, departure: $departure, destination: $destination}';
   }
 }
 
@@ -74,15 +85,20 @@ class Airport {
     required this.region,
   });
 
-  factory Airport.fromJson(Map<String, dynamic> json) {
-    return Airport(
-      icao: json['ICAO'] as String,
-      name: json['name'] as String,
-      latitude: (json['latitude'] as num).toDouble(),
-      longitude: (json['longitude'] as num).toDouble(),
-      city: json['municipality'] as String,
-      country: json['iso_country'] as String,
-      region: json['iso_region'] as String,
-    );
+factory Airport.fromJson(Map<String, dynamic> json) {
+  return Airport(
+    icao: json['ICAO'] as String? ?? '', // Setze einen Standardwert, falls null
+    name: json['name'] as String? ?? '', // Setze einen Standardwert
+    latitude: (json['latitude'] as num?)?.toDouble() ?? 0.0, // Setze einen Standardwert
+    longitude: (json['longitude'] as num?)?.toDouble() ?? 0.0, // Setze einen Standardwert
+    city: json['municipality'] as String? ?? '', // Setze einen Standardwert
+    country: json['iso_country'] as String? ?? '', // Setze einen Standardwert
+    region: json['iso_region'] as String? ?? '', // Setze einen Standardwert
+  );
+}
+
+  @override
+  String toString() {
+    return 'Airport{icao: $icao, name: $name, latitude: $latitude, longitude: $longitude, city: $city, country: $country, region: $region}';
   }
 }

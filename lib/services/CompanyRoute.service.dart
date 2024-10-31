@@ -6,11 +6,9 @@ import 'package:fldc/services/api.service.dart';
 class CompanyRouteService {
   static const defaultURL = 'https://lrenti.github.io/api/flylat/data/routes/';
 
-  static get http => null;
-
-  static Future<CompanyRoutes> getCompanyRoutes(companyId) async {
-    var url = defaultURL + '${companyId.toString()}.json';
-    var companyRoutes;
+  static Future<CompanyRoutes> getCompanyRoutes(String companyId) async {
+    var url = defaultURL + '${companyId}.json';
+    CompanyRoutes companyRoutes = CompanyRoutes(name: '', id: 0, updateTimeStamp: DateTime.now(), routes: []);
 
     await ApiService.send(
       CrudRequest.getMethod,
@@ -22,6 +20,6 @@ class CompanyRouteService {
         print('Error: $statusCode, $message');
       },
     );
-    return companyRoutes ?? CompanyRoutes(routes: [], name: 'TEST', id: 0, updateTimeStamp: DateTime.now());
+    return companyRoutes;
   }
 }

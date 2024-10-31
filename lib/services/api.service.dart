@@ -37,9 +37,7 @@ class ApiService {
             headers = {
               '<Accept>': 'application/json'
             };
-            print("Header YES");
           }
-          print("Start GET Request");
           var response = await _handleGetRequest(url, headers);
           _handleResponse(response, onSuccess, onError);
           break;

@@ -1,3 +1,5 @@
+import 'package:fldc/controller/AirlineController.dart';
+import 'package:fldc/controller/Map.controller.dart';
 import 'package:fldc/helpers/extensions/app_localization_delegate.dart';
 import 'package:fldc/helpers/services/localizations/language.dart';
 import 'package:fldc/helpers/services/navigation_services.dart';
@@ -19,6 +21,10 @@ Future<void> main() async {
   await LocalStorage.init();
   AppStyle.init();
   await ThemeCustomizer.init();
+
+  Get.put(Airlinecontroller());
+  Get.put(MapPageController());
+
   runApp(ChangeNotifierProvider<AppNotifier>(
     create: (context) => AppNotifier(),
     child: MyApp(),
