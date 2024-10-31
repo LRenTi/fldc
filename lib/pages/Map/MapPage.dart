@@ -163,6 +163,7 @@ class _MapPageState extends State<MapPage>
                     ],
                   ),
                   child: DropdownButton<String>(
+                    dropdownColor: Colors.white,
                     value: selectedOption,
                     items: dropdownOptions.map((String option) {
                       return DropdownMenuItem<String>(
