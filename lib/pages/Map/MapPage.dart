@@ -32,6 +32,7 @@ class _MapPageState extends State<MapPage>
     super.initState();
     controller = MapControllerFLDC();
     data = CompanyRouteService.getCompanyRoutes(100172);
+    flights = [];
     _fetchFlightData();
     _fetchAIRcelerates();
   }
@@ -40,7 +41,7 @@ class _MapPageState extends State<MapPage>
     ApiService.send(
       CrudRequest.getMethod,
       "https://flylat.net/flylat_connect/map/mapper_all/getDataAi.php",
-      cors: true,
+      cors: false,
       onSuccess: (response) {
         setState(() {
           flights = (response as List)
