@@ -1,0 +1,882 @@
+[
+    {
+        "name": "Abidjan",
+        "icao": "DIAP"
+    },
+    {
+        "name": "Abu Dhabi",
+        "icao": "OMAA"
+    },
+    {
+        "name": "Addis Ababa",
+        "icao": "HAAB"
+    },
+    {
+        "name": "Adelaide",
+        "icao": "YPAD"
+    },
+    {
+        "name": "Aktobe",
+        "icao": "UATT"
+    },
+    {
+        "name": "Al Ain",
+        "icao": "OMAL"
+    },
+    {
+        "name": "Alice Springs",
+        "icao": "YBAS"
+    },
+    {
+        "name": "Almaty",
+        "icao": "UAAA"
+    },
+    {
+        "name": "Amman",
+        "icao": "OJAI"
+    },
+    {
+        "name": "Amsterdam",
+        "icao": "EHAM"
+    },
+    {
+        "name": "Anchorage",
+        "icao": "PANC"
+    },
+    {
+        "name": "Ankara",
+        "icao": "LTAC"
+    },
+    {
+        "name": "Ashgabat",
+        "icao": "UTAA"
+    },
+    {
+        "name": "Athens",
+        "icao": "LGAV"
+    },
+    {
+        "name": "Atlanta",
+        "icao": "KATL"
+    },
+    {
+        "name": "Auckland",
+        "icao": "NZAA"
+    },
+    {
+        "name": "Bahrain",
+        "icao": "OBBI"
+    },
+    {
+        "name": "Baku",
+        "icao": "UBBB"
+    },
+    {
+        "name": "Bali",
+        "icao": "WADD"
+    },
+    {
+        "name": "Bangalore",
+        "icao": "VOBL"
+    },
+    {
+        "name": "Bangkok (Suvarnabhumi)",
+        "icao": "VTBS"
+    },
+    {
+        "name": "Bangkok (Don Mueang)",
+        "icao": "VTBD"
+    },
+    {
+        "name": "Bangor",
+        "icao": "KBGR"
+    },
+    {
+        "name": "Barcelona",
+        "icao": "LEBL"
+    },
+    {
+        "name": "Batam",
+        "icao": "WIDD"
+    },
+    {
+        "name": "Beijing",
+        "icao": "ZBAA"
+    },
+    {
+        "name": "Berlin Schönefeld",
+        "icao": "EDDB"
+    },
+    {
+        "name": "Berlin Tegel",
+        "icao": "EDDT"
+    },
+    {
+        "name": "Birmingham (USA)",
+        "icao": "KBHM"
+    },
+    {
+        "name": "Birmingham",
+        "icao": "EGBB"
+    },
+    {
+        "name": "Bogota",
+        "icao": "SKBO"
+    },
+    {
+        "name": "Bordeaux",
+        "icao": "LFBD"
+    },
+    {
+        "name": "Boston",
+        "icao": "KBOS"
+    },
+    {
+        "name": "Bremen",
+        "icao": "EDDW"
+    },
+    {
+        "name": "Brest",
+        "icao": "LFRB"
+    },
+    {
+        "name": "Brisbane",
+        "icao": "YBBN"
+    },
+    {
+        "name": "Bristol",
+        "icao": "EGGD"
+    },
+    {
+        "name": "Brussels",
+        "icao": "EBBR"
+    },
+    {
+        "name": "Budapest",
+        "icao": "LHBP"
+    },
+    {
+        "name": "Buenos Aires",
+        "icao": "SAEZ"
+    },
+    {
+        "name": "Cairo",
+        "icao": "HECA"
+    },
+    {
+        "name": "Cancun",
+        "icao": "MMUN"
+    },
+    {
+        "name": "Cape Town",
+        "icao": "FACT"
+    },
+    {
+        "name": "Cardiff",
+        "icao": "EGFF"
+    },
+    {
+        "name": "Casablanca",
+        "icao": "GMMN"
+    },
+    {
+        "name": "Chateauroux",
+        "icao": "LFLX"
+    },
+    {
+        "name": "Chengdu",
+        "icao": "ZUUU"
+    },
+    {
+        "name": "Chiang Mai",
+        "icao": "VTCC"
+    },
+    {
+        "name": "Chicago",
+        "icao": "KORD"
+    },
+    {
+        "name": "Christchurch",
+        "icao": "NZCH"
+    },
+    {
+        "name": "Cincinnati",
+        "icao": "KCVG"
+    },
+    {
+        "name": "Cologne",
+        "icao": "EDDK"
+    },
+    {
+        "name": "Colombo",
+        "icao": "VCBI"
+    },
+    {
+        "name": "Copenhagen",
+        "icao": "EKCH"
+    },
+    {
+        "name": "Dakar",
+        "icao": "GOBD"
+    },
+    {
+        "name": "Dallas/Fort Worth",
+        "icao": "KDFW"
+    },
+    {
+        "name": "Darwin",
+        "icao": "YPDN"
+    },
+    {
+        "name": "Delhi",
+        "icao": "VIDP"
+    },
+    {
+        "name": "Denver",
+        "icao": "KDEN"
+    },
+    {
+        "name": "Doha",
+        "icao": "OTHH"
+    },
+    {
+        "name": "Dresden",
+        "icao": "EDDC"
+    },
+    {
+        "name": "Dubai (Al Maktoum)",
+        "icao": "OMDW"
+    },
+    {
+        "name": "Dubai (International)",
+        "icao": "OMDB"
+    },
+    {
+        "name": "Dublin",
+        "icao": "EIDW"
+    },
+    {
+        "name": "Durban",
+        "icao": "FALE"
+    },
+    {
+        "name": "Dusseldorf",
+        "icao": "EDDL"
+    },
+    {
+        "name": "Edmonton International",
+        "icao": "CYEG"
+    },
+    {
+        "name": "Enfidha",
+        "icao": "DTNH"
+    },
+    {
+        "name": "Ekaterinburg",
+        "icao": "USSS"
+    },
+    {
+        "name": "Erbil",
+        "icao": "ORER"
+    },
+    {
+        "name": "Faleolo (Apia)",
+        "icao": "NSFA"
+    },
+    {
+        "name": "Fort-de-France",
+        "icao": "TFFF"
+    },
+    {
+        "name": "Frankfurt",
+        "icao": "EDDF"
+    },
+    {
+        "name": "Fuerteventura",
+        "icao": "GCFV"
+    },
+    {
+        "name": "Gander",
+        "icao": "CYQX"
+    },
+    {
+        "name": "Glasgow",
+        "icao": "EGPF"
+    },
+    {
+        "name": "Gran Canaria",
+        "icao": "GCLP"
+    },
+    {
+        "name": "Guangzhou",
+        "icao": "ZGGG"
+    },
+    {
+        "name": "Halifax",
+        "icao": "CYHZ"
+    },
+    {
+        "name": "Hamburg",
+        "icao": "EDDH"
+    },
+    {
+        "name": "Hamburg Finkenwerder",
+        "icao": "EDHI"
+    },
+    {
+        "name": "Hangzhou",
+        "icao": "ZSHC"
+    },
+    {
+        "name": "Hanoi",
+        "icao": "VVNB"
+    },
+    {
+        "name": "Helsinki",
+        "icao": "EFHK"
+    },
+    {
+        "name": "Hilo (Hawaii)",
+        "icao": "PHTO"
+    },
+    {
+        "name": "Ho Chi Minh City",
+        "icao": "VVTS"
+    },
+    {
+        "name": "Hohhot",
+        "icao": "ZBHH"
+    },
+    {
+        "name": "Hong-Kong",
+        "icao": "VHHH"
+    },
+    {
+        "name": "Honolulu",
+        "icao": "PHNL"
+    },
+    {
+        "name": "Houston",
+        "icao": "KIAH"
+    },
+    {
+        "name": "Hyderabad",
+        "icao": "VOHS"
+    },
+    {
+        "name": "Iqaluit",
+        "icao": "CYFB"
+    },
+    {
+        "name": "Islamabad (New)",
+        "icao": "OPIS"
+    },
+    {
+        "name": "Istanbul (New)",
+        "icao": "LTFM"
+    },
+    {
+        "name": "Jakarta",
+        "icao": "WIII"
+    },
+    {
+        "name": "Jeddah",
+        "icao": "OEJN"
+    },
+    {
+        "name": "Jeju",
+        "icao": "RKPC"
+    },
+    {
+        "name": "Jinan",
+        "icao": "ZSJN"
+    },
+    {
+        "name": "Johannesburg",
+        "icao": "FAOR"
+    },
+    {
+        "name": "Johor Bahru",
+        "icao": "WMKJ"
+    },
+    {
+        "name": "Kailua-Kona",
+        "icao": "PHKO"
+    },
+    {
+        "name": "Karachi",
+        "icao": "OPKC"
+    },
+    {
+        "name": "Karlsruhe",
+        "icao": "EDSB"
+    },
+    {
+        "name": "Khabarovsk",
+        "icao": "UHHH"
+    },
+    {
+        "name": "Kiev",
+        "icao": "UKBB"
+    },
+    {
+        "name": "Kuala Lumpur",
+        "icao": "WMKK"
+    },
+    {
+        "name": "Kunming",
+        "icao": "ZPPP"
+    },
+    {
+        "name": "Kuwait",
+        "icao": "OKBK"
+    },
+    {
+        "name": "La Reunion",
+        "icao": "FMEE"
+    },
+    {
+        "name": "Lagos",
+        "icao": "DNMM"
+    },
+    {
+        "name": "Las Vegas",
+        "icao": "KLAS"
+    },
+    {
+        "name": "Leipzig/Halle",
+        "icao": "EDDP"
+    },
+    {
+        "name": "Linz",
+        "icao": "LOWL"
+    },
+    {
+        "name": "London (Gatwick)",
+        "icao": "EGKK"
+    },
+    {
+        "name": "London (Heathrow)",
+        "icao": "EGLL"
+    },
+    {
+        "name": "London (Stansted)",
+        "icao": "EGSS"
+    },
+    {
+        "name": "Los Angeles",
+        "icao": "KLAX"
+    },
+    {
+        "name": "Lyon",
+        "icao": "LFLL"
+    },
+    {
+        "name": "Madinah",
+        "icao": "OEMA"
+    },
+    {
+        "name": "Madrid",
+        "icao": "LEMD"
+    },
+    {
+        "name": "Malta",
+        "icao": "LMML"
+    },
+    {
+        "name": "Manchester",
+        "icao": "EGCC"
+    },
+    {
+        "name": "Manila",
+        "icao": "RPLL"
+    },
+    {
+        "name": "Manston",
+        "icao": "EGMH"
+    },
+    {
+        "name": "Mauritius",
+        "icao": "FIMP"
+    },
+    {
+        "name": "Medan",
+        "icao": "WIMM"
+    },
+    {
+        "name": "Melbourne (Avalon)",
+        "icao": "YMAV"
+    },
+    {
+        "name": "Melbourne (Tullamarine)",
+        "icao": "YMML"
+    },
+    {
+        "name": "Mexico City",
+        "icao": "MMMX"
+    },
+    {
+        "name": "Miami",
+        "icao": "KMIA"
+    },
+    {
+        "name": "Milan",
+        "icao": "LIMC"
+    },
+    {
+        "name": "Milwaukee",
+        "icao": "KMKE"
+    },
+    {
+        "name": "Minneapolis",
+        "icao": "KMSP"
+    },
+    {
+        "name": "Montreal",
+        "icao": "CYUL"
+    },
+    {
+        "name": "Moscow (Domodedovo)",
+        "icao": "UUDD"
+    },
+    {
+        "name": "Moscow (Sheremetyevo)",
+        "icao": "UUEE"
+    },
+    {
+        "name": "Moscow (Vnukovo)",
+        "icao": "UUWW"
+    },
+    {
+        "name": "Mumbai",
+        "icao": "VABB"
+    },
+    {
+        "name": "Munich",
+        "icao": "EDDM"
+    },
+    {
+        "name": "Muscat",
+        "icao": "OOMS"
+    },
+    {
+        "name": "Nadi",
+        "icao": "NFFN"
+    },
+    {
+        "name": "Nagoya",
+        "icao": "RJGG"
+    },
+    {
+        "name": "Nantes",
+        "icao": "LFRS"
+    },
+    {
+        "name": "New York (JFK)",
+        "icao": "KJFK"
+    },
+    {
+        "name": "Nice",
+        "icao": "LFMN"
+    },
+    {
+        "name": "Nottingham",
+        "icao": "EGBN"
+    },
+    {
+        "name": "Noumea",
+        "icao": "NWWW"
+    },
+    {
+        "name": "Novosibirsk",
+        "icao": "UNNT"
+    },
+    {
+        "name": "Oakland",
+        "icao": "KOAK"
+    },
+    {
+        "name": "Ontario",
+        "icao": "KONT"
+    },
+    {
+        "name": "Orlando",
+        "icao": "KMCO"
+    },
+    {
+        "name": "Osaka",
+        "icao": "RJBB"
+    },
+    {
+        "name": "Oslo",
+        "icao": "ENGM"
+    },
+    {
+        "name": "Ottawa",
+        "icao": "CYOW"
+    },
+    {
+        "name": "Pago Pago",
+        "icao": "NSTU"
+    },
+    {
+        "name": "Palma de Mallorca",
+        "icao": "LEPA"
+    },
+    {
+        "name": "Pantnagar",
+        "icao": "VIPT"
+    },
+    {
+        "name": "Paris (Charles de Gaulle)",
+        "icao": "LFPG"
+    },
+    {
+        "name": "Paris (Orly)",
+        "icao": "LFPO"
+    },
+    {
+        "name": "Paris (Vatry)",
+        "icao": "LFOK"
+    },
+    {
+        "name": "Paya Lebar",
+        "icao": "WSAP"
+    },
+    {
+        "name": "Perpignan",
+        "icao": "LFMP"
+    },
+    {
+        "name": "Perth",
+        "icao": "YPPH"
+    },
+    {
+        "name": "Philadelphia",
+        "icao": "KPHL"
+    },
+    {
+        "name": "Pointe-à-Pitre",
+        "icao": "TFFR"
+    },
+    {
+        "name": "Prague",
+        "icao": "LKPR"
+    },
+    {
+        "name": "Punta Cana",
+        "icao": "MDPC"
+    },
+    {
+        "name": "Reykjavík",
+        "icao": "BIKF"
+    },
+    {
+        "name": "Rio de Janeiro (Galeão)",
+        "icao": "SBGL"
+    },
+    {
+        "name": "Rionegro",
+        "icao": "SKRG"
+    },
+    {
+        "name": "Riyadh",
+        "icao": "OERK"
+    },
+    {
+        "name": "Rockhampton",
+        "icao": "YBRK"
+    },
+    {
+        "name": "Rome (Fiumicino)",
+        "icao": "LIRF"
+    },
+    {
+        "name": "Salalah",
+        "icao": "OOSA"
+    },
+    {
+        "name": "Salt Lake City",
+        "icao": "KSLC"
+    },
+    {
+        "name": "San Francisco",
+        "icao": "KSFO"
+    },
+    {
+        "name": "Santiago",
+        "icao": "SCEL"
+    },
+    {
+        "name": "Sao Paulo GRU",
+        "icao": "SBGR"
+    },
+    {
+        "name": "Sao Paulo VCP",
+        "icao": "SBKP"
+    },
+    {
+        "name": "Sapporo (New Chitose)",
+        "icao": "RJCC"
+    },
+    {
+        "name": "Seoul (Gimpo)",
+        "icao": "RKSS"
+    },
+    {
+        "name": "Seoul (Incheon)",
+        "icao": "RKSI"
+    },
+    {
+        "name": "Seville Airport",
+        "icao": "LEZL"
+    },
+    {
+        "name": "Stewart",
+        "icao": "KSWF"
+    },
+    {
+        "name": "Shanghai (Pudong)",
+        "icao": "ZSPD"
+    },
+    {
+        "name": "Shanghai (Hongqiao)",
+        "icao": "ZSSS"
+    },
+    {
+        "name": "Shannon",
+        "icao": "EINN"
+    },
+    {
+        "name": "Sharm El Sheikh",
+        "icao": "HESH"
+    },
+    {
+        "name": "Shenzhen",
+        "icao": "ZGSZ"
+    },
+    {
+        "name": "Shijiazhuang",
+        "icao": "ZBSJ"
+    },
+    {
+        "name": "Shiraz",
+        "icao": "OISS"
+    },
+    {
+        "name": "Simferopol",
+        "icao": "UKFF"
+    },
+    {
+        "name": "Singapore",
+        "icao": "WSSS"
+    },
+    {
+        "name": "Stockholm (Arlanda)",
+        "icao": "ESSA"
+    },
+    {
+        "name": "Stuttgart",
+        "icao": "EDDS"
+    },
+    {
+        "name": "Sydney",
+        "icao": "YSSY"
+    },
+    {
+        "name": "Tahiti",
+        "icao": "NTAA"
+    },
+    {
+        "name": "Taipei",
+        "icao": "RCTP"
+    },
+    {
+        "name": "Tarbes",
+        "icao": "LFBT"
+    },
+    {
+        "name": "Tashkent",
+        "icao": "UTTT"
+    },
+    {
+        "name": "Tehran",
+        "icao": "OIIE"
+    },
+    {
+        "name": "Tel Aviv",
+        "icao": "LLBG"
+    },
+    {
+        "name": "Tianjin",
+        "icao": "ZBTJ"
+    },
+    {
+        "name": "Tokyo (Haneda)",
+        "icao": "RJTT"
+    },
+    {
+        "name": "Tokyo (Narita)",
+        "icao": "RJAA"
+    },
+    {
+        "name": "Toronto (Pearson)",
+        "icao": "CYYZ"
+    },
+    {
+        "name": "Toulouse",
+        "icao": "LFBO"
+    },
+    {
+        "name": "Trabzon",
+        "icao": "LTCG"
+    },
+    {
+        "name": "U-Tapao",
+        "icao": "VTBU"
+    },
+    {
+        "name": "Vancouver",
+        "icao": "CYVR"
+    },
+    {
+        "name": "Vienna",
+        "icao": "LOWW"
+    },
+    {
+        "name": "Vladivostok",
+        "icao": "UHWW"
+    },
+    {
+        "name": "Warsaw",
+        "icao": "EPWA"
+    },
+    {
+        "name": "Washington D.C. (Dulles)",
+        "icao": "KIAD"
+    },
+    {
+        "name": "Windsor Locks",
+        "icao": "KBDL"
+    },
+    {
+        "name": "Xian",
+        "icao": "ZLXY"
+    },
+    {
+        "name": "Zahedan",
+        "icao": "OIZH"
+    },
+    {
+        "name": "Zhuhai",
+        "icao": "ZGSD"
+    },
+    {
+        "name": "Zurich",
+        "icao": "LSZH"
+    },
+    {
+        "name": "Saint Petersburg",
+        "icao": "ULLI"
+    }
+]

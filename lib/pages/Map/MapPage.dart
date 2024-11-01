@@ -1,6 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:fldc/controller/AirlineController.dart';
 import 'package:fldc/model/aircelerates_model.dart';
 import 'package:fldc/model/airline_model.dart';
+import 'package:fldc/model/airport_model.dart';
 import 'package:fldc/model/flightdata_model.dart';
 import 'package:fldc/services/api.service.dart';
 import 'package:fldc/view/ui/toast_message_screen.dart';
@@ -220,6 +224,11 @@ class _MapPageState extends State<MapPage>
           () {
             flights = controller.flights;
             aircelerates = controller.aircelerates;
+            bool _isHoveringA380 = false;
+
+            bool hasA380restriction = controller.a380restriction.any((element) {
+              return element.icao == airport.icao;
+            });
 
             return Dialog(
               clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -234,17 +243,75 @@ class _MapPageState extends State<MapPage>
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: MySpacing.all(16),
-                        child: MyText.labelLarge('${airport.name}',
-                            fontWeight: 600),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: MySpacing.all(16),
+                            child: MyText.labelLarge(
+                                '${airport.name}  -  ${airport.city}, ${airport.country}',
+                                fontWeight: 600),
+                          ),
+                        ],
                       ),
                       Divider(height: 0, thickness: 1),
-                      Padding(
-                        padding: MySpacing.all(16),
-                        child: MyText.bodySmall(
-                            '${airport.city}, ${airport.country}',
-                            fontWeight: 600),
+                      Row(
+                        children: [
+                          if (!hasA380restriction)
+                            Padding(
+                              padding: MySpacing.symmetric(
+                                  horizontal: 16, vertical: 8),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Restrictions:",
+                                    style: TextStyle(fontSize: 10),
+                                  ),
+                                  MouseRegion(
+                                    onEnter: (_) =>
+                                        setState(() => _isHoveringA380 = true),
+                                    onExit: (_) =>
+                                        setState(() => _isHoveringA380 = false),
+                                    child: Container(
+                                      margin: MySpacing.top(2),
+                                      padding: MySpacing.all(2),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.red),
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: Text(
+                                        "A380",
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                    ),
+                                  ),
+                                  if (_isHoveringA380)
+                                    Positioned(
+                                      top: -30,
+                                      child: Material(
+                                        elevation: 4,
+                                        child: Container(
+                                          padding: EdgeInsets.all(8),
+                                          color: Colors.white,
+                                          decoration: BoxDecoration(
+                                            border:
+                                                Border.all(color: Colors.black),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: Text(
+                                            "Hier ist ein Hover-Text!",
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                        ],
                       ),
                       Divider(height: 0, thickness: 1),
                       Padding(
@@ -299,35 +366,27 @@ class _MapPageState extends State<MapPage>
                                   width: 15,
                                   height: 15,
                                   decoration: BoxDecoration(
-                                    color: route.verified
-                                        ? Colors.green
-                                        : Colors.red,
+                                    color: activeFlight
+                                        ? Color(0xFF57B8F0)
+                                        : route.verified
+                                            ? Colors.green
+                                            : Colors.red,
                                     borderRadius: BorderRadius.circular(2),
                                   ),
-                                  child: activeFlight
-                                      ? Container(
-                                          width: 15,
-                                          height: 15,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFF57B8F0),
-                                            borderRadius:
-                                                BorderRadius.circular(2),
-                                          ),
+                                  child: hasMatchingFlightData
+                                      ? Icon(
+                                          Icons.flight,
+                                          size: 10,
+                                          color: Colors.white,
                                         )
-                                      : hasMatchingFlightData
+                                      : hasAircelerates
                                           ? Icon(
                                               Icons.flight,
                                               size: 10,
-                                              color: Colors.white,
+                                              color: Color.fromARGB(
+                                                  255, 255, 187, 110),
                                             )
-                                          : hasAircelerates
-                                              ? Icon(
-                                                  Icons.flight,
-                                                  size: 10,
-                                                  color: Color.fromARGB(
-                                                      255, 255, 187, 110),
-                                                )
-                                              : null,
+                                          : null,
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 3),

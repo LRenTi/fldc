@@ -126,6 +126,7 @@ flutter:
     - assets/images/dummy/
     - assets/images/brand/
     - assets/data/
+    - assets/data/aircraftrestriction/
     - assets/images/products/
     - assets/images/products/bag/
     - assets/images/products/black_shoes/

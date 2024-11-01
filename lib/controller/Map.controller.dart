@@ -1,8 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:fldc/model/aircelerates_model.dart';
+import 'package:fldc/model/airport_model.dart';
 import 'package:fldc/model/flightdata_model.dart';
 import 'package:fldc/model/routes_model.dart';
 import 'package:fldc/services/CompanyRoute.service.dart';
 import 'package:fldc/services/api.service.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
@@ -16,6 +21,7 @@ class MapPageController extends GetxController {
       name: '', id: 0, updateTimeStamp: DateTime.now(), routes: []).obs;
   var flights = <FlightData>[].obs;
   var aircelerates = <Aircelerates>[].obs;
+  var a380restriction = <AircraftRestriction>[].obs;
 
   @override
   void onInit() {
@@ -23,6 +29,7 @@ class MapPageController extends GetxController {
     getCompanyRoutes(companyId);
     fetchFlightData();
     fetchAIRcelerates();
+    loadAircraftRestrictions();
   }
 
   void getCompanyRoutes(String id) async {
@@ -63,5 +70,16 @@ class MapPageController extends GetxController {
         print('Error: $statusCode, $message');
       },
     );
+  }
+
+  Future<void> loadAircraftRestrictions() async {
+    try {
+      final jsonString = await rootBundle
+          .loadString('assets/data/aircraftrestriction/a380.json');
+      final List<dynamic> jsonList = json.decode(jsonString);
+      a380restriction.value = jsonList.map((e) => AircraftRestriction.fromJson(e)).toList();
+    } catch (e) {
+      print("Error loading JSON: $e");
+    }
   }
 }
