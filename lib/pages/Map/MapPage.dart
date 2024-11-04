@@ -92,7 +92,9 @@ class _MapPageState extends State<MapPage>
               ),
               children: [
                 TileLayer(
-                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  urlTemplate:
+                      'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
+                  subdomains: ['a', 'b', 'c', 'd'],
                   userAgentPackageName: 'dev.fleaflet.flutter_map.example',
                 ),
                 PolylineLayer(
