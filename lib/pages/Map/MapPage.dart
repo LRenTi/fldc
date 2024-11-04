@@ -9,6 +9,7 @@ import 'package:fldc/model/flightdata_model.dart';
 import 'package:fldc/services/api.service.dart';
 import 'package:fldc/view/ui/toast_message_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
@@ -48,7 +49,9 @@ class _MapPageState extends State<MapPage>
     selectedOption = dropdownOptions.firstWhere(
         (airline) => airline.id == '100172',
         orElse: () => dropdownOptions.first);
-    controller.getCompanyRoutes(selectedOption!.id);
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      controller.getCompanyRoutes(selectedOption!.id);
+    });
   }
 
   @override
@@ -136,7 +139,7 @@ class _MapPageState extends State<MapPage>
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: theme.dialogBackgroundColor,
                   borderRadius: BorderRadius.circular(5),
                   boxShadow: [
                     BoxShadow(
@@ -148,7 +151,7 @@ class _MapPageState extends State<MapPage>
                   ],
                 ),
                 child: DropdownButton<String>(
-                  dropdownColor: Colors.white,
+                  dropdownColor: theme.dialogBackgroundColor,
                   value: selectedOption?.id,
                   items: dropdownOptions
                       .map<DropdownMenuItem<String>>((Airline option) {

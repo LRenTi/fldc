@@ -57,6 +57,7 @@ dependencies:
 
   # Icons
   flutter_lucide: ^1.4.0
+  font_awesome_flutter: ^10.8.0
   iconify_flutter: ^0.0.5
 
   # Storage
