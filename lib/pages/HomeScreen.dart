@@ -31,6 +31,18 @@ class _HomescreenState extends State<Homescreen>
     super.initState();
   }
 
+  bool isTestEnvironment() {
+    final Uri currentUri = Uri.base;
+    if(currentUri.host == 'lrenti.github.io/webfldc') {
+      print('Test Environment active: ${currentUri.host}');
+      return true;
+    }
+    else {
+      print('Test Environment inactive: ${currentUri.host}');
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Layout(
@@ -61,35 +73,37 @@ class _HomescreenState extends State<Homescreen>
                 MySpacing.height(flexSpacing),
                 MyFlex(
                   children: [
-                    MyFlexItem(
-                      sizes: "lg-12 md-6",
-                      child: MyCard(
-                        shadow: MyShadow(
-                            elevation: 0.5, position: MyShadowPosition.bottom),
-                        borderRadiusAll: 8,
-                        paddingAll: 23,
-                        color: Colors.redAccent,
-                        child: Column(
-                          children: [
-                            Text(
-                              "Under Development!",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            MySpacing.height(flexSpacing),
-                            Text(
-                              "This application is still under development. If you have any problems or suggestion please contact me.",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.normal),
-                            ),
-                          ],
+                    if (isTestEnvironment())
+                      MyFlexItem(
+                        sizes: "lg-6 md-6",
+                        child: MyCard(
+                          shadow: MyShadow(
+                              elevation: 0.5,
+                              position: MyShadowPosition.bottom),
+                          borderRadiusAll: 8,
+                          paddingAll: 23,
+                          color: Colors.redAccent,
+                          child: Column(
+                            children: [
+                              Text(
+                                "In Development!",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              MySpacing.height(flexSpacing),
+                              Text(
+                                "This application is still in a very early Stage. If you have any problems or suggestion please contact me.",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
                     MyFlexItem(
                       sizes: "lg-3 md-6",
                       child: CardOpenExternal(
