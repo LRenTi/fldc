@@ -33,12 +33,12 @@ class _HomescreenState extends State<Homescreen>
 
   bool isTestEnvironment() {
     final Uri currentUri = Uri.base;
-    if(currentUri.host == 'lrenti.github.io/webfldc') {
-      print('Test Environment active: ${currentUri.host}');
+    if (currentUri.host == 'lrenti.github.io' &&
+        currentUri.path.contains('webfldc')) {
+      print('Test Environment active: ${currentUri.host}${currentUri.path}');
       return true;
-    }
-    else {
-      print('Test Environment inactive: ${currentUri.host}');
+    } else {
+      print('Test Environment inactive: ${currentUri.host}${currentUri.path}');
       return false;
     }
   }
