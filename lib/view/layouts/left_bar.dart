@@ -136,7 +136,13 @@ class _LeftBarState extends State<LeftBar>
                         title: "Home",
                         isCondensed: isCondensed,
                         iconData: LucideIcons.house,
-                        route: '/dashboard/',
+                        route: '/',
+                      ),
+                      NavigationItem(
+                        title: "Dashboard",
+                        isCondensed: isCondensed,
+                        iconData: LucideIcons.layout_dashboard,
+                        route: '/dashboard',
                       ),
                       NavigationItem(
                         title: "Map",

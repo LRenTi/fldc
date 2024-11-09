@@ -75,7 +75,7 @@ class _HomescreenState extends State<Homescreen>
                   children: [
                     if (isTestEnvironment())
                       MyFlexItem(
-                        sizes: "lg-6 md-6",
+                        sizes: "lg-12 md-6",
                         child: MyCard(
                           shadow: MyShadow(
                               elevation: 0.5,

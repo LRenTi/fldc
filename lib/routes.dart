@@ -1,4 +1,5 @@
 import 'package:fldc/helpers/services/auth_service.dart';
+import 'package:fldc/pages/Dashboard/Dashboard_Airline.dart';
 import 'package:fldc/pages/HomeScreen.dart';
 import 'package:fldc/pages/Map/MapPage.dart';
 import 'package:fldc/view/apps/calendar/calendar_screen.dart';
@@ -93,6 +94,11 @@ getPageRoute() {
     GetPage(
       name: '/map',
       page: () => MapPage(),
+      //middlewares: [AuthMiddleware()]
+    ),
+    GetPage(
+      name: '/dashboard',
+      page: () => DashboardAirline(),
       //middlewares: [AuthMiddleware()]
     ),
     GetPage(
