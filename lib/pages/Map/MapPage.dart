@@ -91,7 +91,17 @@ class _MapPageState extends State<MapPage>
             FlutterMap(
               options: MapOptions(
                 initialCenter: LatLng(51.0, 10.0),
-                initialZoom: 4.0,
+                initialZoom: 3.0,
+                interactionOptions: InteractionOptions(
+                  flags: InteractiveFlag.pinchZoom |
+                      InteractiveFlag.doubleTapDragZoom |
+                      InteractiveFlag.doubleTapZoom |
+                      InteractiveFlag.drag |
+                      InteractiveFlag.scrollWheelZoom |
+                      InteractiveFlag.pinchMove |
+                      InteractiveFlag.pinchZoom |
+                      InteractiveFlag.flingAnimation
+                ),
               ),
               children: [
                 TileLayer(
