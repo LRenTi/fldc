@@ -171,7 +171,6 @@ class _MapPageState extends State<MapPage>
               Builder(
                 builder: (BuildContext context) {
                   return Container(
-                    padding: EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       color: theme.dialogBackgroundColor,
                       borderRadius: BorderRadius.circular(5),
@@ -184,16 +183,20 @@ class _MapPageState extends State<MapPage>
                         ),
                       ],
                     ),
-                    child: IconButton(
-                      icon: Icon(Icons.menu),
-                      onPressed: () {
-                        Scaffold.of(context).openDrawer();
-                      },
+                    child: SizedBox(
+                      height: 50,
+                      width: 50,
+                      child: IconButton(
+                        icon: Icon(Icons.menu),
+                        onPressed: () {
+                          Scaffold.of(context).openDrawer();
+                        },
+                      ),
                     ),
                   );
                 },
               ),
-            if (screenType.isMobile || screenType.isTablet) MySpacing.width(10) else MySpacing.width(58),
+            if (screenType.isMobile || screenType.isTablet) MySpacing.width(10) else MySpacing.width(60),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
@@ -208,25 +211,28 @@ class _MapPageState extends State<MapPage>
                   ),
                 ],
               ),
-              child: DropdownButton<String>(
-                dropdownColor: theme.dialogBackgroundColor,
-                value: selectedOption?.id,
-                items: dropdownOptions
-                    .map<DropdownMenuItem<String>>((Airline option) {
-                  return DropdownMenuItem<String>(
-                    value: option.id,
-                    child: Text(option.name),
-                  );
-                }).toList(),
-                onChanged: (String? value) {
-                  if (value != null) {
-                    setState(() {
-                      selectedOption = dropdownOptions
-                          .firstWhere((airline) => airline.id == value);
-                      controller.getCompanyRoutes(value);
-                    });
-                  }
-                },
+              child: SizedBox(
+                height: 50,
+                child: DropdownButton<String>(
+                  dropdownColor: theme.dialogBackgroundColor,
+                  value: selectedOption?.id,
+                  items: dropdownOptions
+                      .map<DropdownMenuItem<String>>((Airline option) {
+                    return DropdownMenuItem<String>(
+                      value: option.id,
+                      child: Text(option.name),
+                    );
+                  }).toList(),
+                  onChanged: (String? value) {
+                    if (value != null) {
+                      setState(() {
+                        selectedOption = dropdownOptions
+                            .firstWhere((airline) => airline.id == value);
+                        controller.getCompanyRoutes(value);
+                      });
+                    }
+                  },
+                ),
               ),
             ),
           ],
