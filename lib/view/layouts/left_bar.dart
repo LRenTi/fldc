@@ -599,7 +599,7 @@ class _LeftBarState extends State<LeftBar>
                         children: [
                           Spacer(),
                           Container(
-                            padding: MySpacing.bottom(8),
+                            padding: MySpacing.bottom(15),
                             alignment: Alignment.bottomCenter,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
