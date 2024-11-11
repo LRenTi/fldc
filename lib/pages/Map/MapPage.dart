@@ -2,16 +2,23 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:fldc/controller/AirlineController.dart';
+import 'package:fldc/helpers/theme/theme_customizer.dart';
+import 'package:fldc/helpers/widgets/my_responsive.dart';
+import 'package:fldc/helpers/widgets/my_screen_media.dart';
+import 'package:fldc/helpers/widgets/responsive.dart';
 import 'package:fldc/model/aircelerates_model.dart';
 import 'package:fldc/model/airline_model.dart';
 import 'package:fldc/model/airport_model.dart';
 import 'package:fldc/model/flightdata_model.dart';
 import 'package:fldc/services/api.service.dart';
+import 'package:fldc/view/layouts/layout.dart';
 import 'package:fldc/view/ui/toast_message_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:fldc/controller/Map.controller.dart';
 import 'package:fldc/helpers/theme/app_theme.dart';
@@ -56,7 +63,10 @@ class _MapPageState extends State<MapPage>
 
   @override
   Widget build(BuildContext context) {
+    MyScreenMediaType screenType =
+        MyScreenMedia.getTypeFromWidth(MediaQuery.of(context).size.width);
     return Scaffold(
+      drawer: LeftBar(),
       body: Obx(() {
         if (controller.isLoading.value) {
           return Center(
@@ -93,15 +103,14 @@ class _MapPageState extends State<MapPage>
                 initialCenter: LatLng(51.0, 10.0),
                 initialZoom: 3.0,
                 interactionOptions: InteractionOptions(
-                  flags: InteractiveFlag.pinchZoom |
-                      InteractiveFlag.doubleTapDragZoom |
-                      InteractiveFlag.doubleTapZoom |
-                      InteractiveFlag.drag |
-                      InteractiveFlag.scrollWheelZoom |
-                      InteractiveFlag.pinchMove |
-                      InteractiveFlag.pinchZoom |
-                      InteractiveFlag.flingAnimation
-                ),
+                    flags: InteractiveFlag.pinchZoom |
+                        InteractiveFlag.doubleTapDragZoom |
+                        InteractiveFlag.doubleTapZoom |
+                        InteractiveFlag.drag |
+                        InteractiveFlag.scrollWheelZoom |
+                        InteractiveFlag.pinchMove |
+                        InteractiveFlag.pinchZoom |
+                        InteractiveFlag.flingAnimation),
               ),
               children: [
                 TileLayer(
@@ -140,51 +149,89 @@ class _MapPageState extends State<MapPage>
                 ),
               ],
             ),
-            LeftBar(
-              isCondensed: true,
-            ),
-            Positioned(
-              top: 20,
-              left: MediaQuery.of(context).size.width / 2 - 100,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                  color: theme.dialogBackgroundColor,
-                  borderRadius: BorderRadius.circular(5),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: DropdownButton<String>(
-                  dropdownColor: theme.dialogBackgroundColor,
-                  value: selectedOption?.id,
-                  items: dropdownOptions
-                      .map<DropdownMenuItem<String>>((Airline option) {
-                    return DropdownMenuItem<String>(
-                      value: option.id,
-                      child: Text(option.name),
-                    );
-                  }).toList(),
-                  onChanged: (String? value) {
-                    if (value != null) {
-                      setState(() {
-                        selectedOption = dropdownOptions
-                            .firstWhere((airline) => airline.id == value);
-                        controller.getCompanyRoutes(value);
-                      });
-                    }
-                  },
-                ),
+            if (!screenType.isMobile && !screenType.isTablet)
+              LeftBar(
+                isCondensed: true,
               ),
-            ),
+            mapNavigator(screenType),
           ],
         );
       }),
+    );
+  }
+
+  Widget mapNavigator(MyScreenMediaType screenType) {
+    return Positioned(
+      top: 10,
+      left: 10,
+      child: Container(
+        child: Row(
+          children: [
+            if (screenType.isMobile || screenType.isTablet)
+              Builder(
+                builder: (BuildContext context) {
+                  return Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: theme.dialogBackgroundColor,
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: IconButton(
+                      icon: Icon(Icons.menu),
+                      onPressed: () {
+                        Scaffold.of(context).openDrawer();
+                      },
+                    ),
+                  );
+                },
+              ),
+            if (screenType.isMobile || screenType.isTablet) MySpacing.width(10) else MySpacing.width(58),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                color: theme.dialogBackgroundColor,
+                borderRadius: BorderRadius.circular(5),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: DropdownButton<String>(
+                dropdownColor: theme.dialogBackgroundColor,
+                value: selectedOption?.id,
+                items: dropdownOptions
+                    .map<DropdownMenuItem<String>>((Airline option) {
+                  return DropdownMenuItem<String>(
+                    value: option.id,
+                    child: Text(option.name),
+                  );
+                }).toList(),
+                onChanged: (String? value) {
+                  if (value != null) {
+                    setState(() {
+                      selectedOption = dropdownOptions
+                          .firstWhere((airline) => airline.id == value);
+                      controller.getCompanyRoutes(value);
+                    });
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
