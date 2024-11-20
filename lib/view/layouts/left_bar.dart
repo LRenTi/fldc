@@ -150,6 +150,12 @@ class _LeftBarState extends State<LeftBar>
                         iconData: LucideIcons.map,
                         route: '/map/',
                       ),
+                      NavigationItem(
+                        title: "Calculators",
+                        isCondensed: isCondensed,
+                        iconData: LucideIcons.calculator,
+                        route: '/calculators/',
+                      ),
                       // labelWidget("Examples".tr()),
                       // NavigationItem(
                       //   iconData: LucideIcons.layout_dashboard,

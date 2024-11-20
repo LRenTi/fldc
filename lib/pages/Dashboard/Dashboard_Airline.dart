@@ -20,7 +20,8 @@ class DashboardAirline extends StatefulWidget {
 
 class _DashboardAirlineState extends State<DashboardAirline>
     with SingleTickerProviderStateMixin, UIMixin {
-  late DashboardAirlineController controller = Get.put(DashboardAirlineController());
+  late DashboardAirlineController controller =
+      Get.put(DashboardAirlineController());
 
   @override
   void initState() {
@@ -36,22 +37,23 @@ class _DashboardAirlineState extends State<DashboardAirline>
           return Column(
             children: [
               Padding(
-                  padding: MySpacing.x(flexSpacing),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      MyText.titleMedium(
-                        "Dashboard",
-                        fontSize: 18,
-                        fontWeight: 600,
-                      ),
-                      MyBreadcrumb(
-                        children: [
-                          MyBreadcrumbItem(name: 'Dashboard'),
-                        ],
-                      ),
-                    ],
-                  ))
+                padding: MySpacing.x(flexSpacing),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    MyText.titleMedium(
+                      "Dashboard",
+                      fontSize: 18,
+                      fontWeight: 600,
+                    ),
+                    MyBreadcrumb(
+                      children: [
+                        MyBreadcrumbItem(name: 'Dashboard'),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ],
           );
         },
